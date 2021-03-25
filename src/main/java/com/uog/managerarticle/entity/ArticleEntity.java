@@ -154,11 +154,11 @@ public class ArticleEntity {
     @Transient
     public String getImagePath(){
         if(thumbnail == null|| id==null) return null;
-        return "/file-article/" + id + "/" + thumbnail;
+        return "file-article/" + id + "/" + thumbnail;
     }
 
     public String getFilePath(){
         if(name == null || id == null) return null;
-        return "/file-article/"+id +"/"+name;
+        return "file-article/"+id +"/"+name;
     }
 }
