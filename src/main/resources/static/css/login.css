@@ -1,0 +1,313 @@
+*{
+    border:0px;
+    margin: 0px;
+    padding: 0px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+}
+h1{
+    margin: 0px;
+    text-align: center;
+}
+img {
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+    width: 100%;
+}
+.row{
+    margin: 0px;
+}
+body{
+    background-image: url('../image/200629.jpg');
+    background-size: cover;
+}
+
+.triagle-wrapper{
+    width: 100%;
+    height: 16vh;
+}
+.triagle{
+    position:absolute;
+    border: solid transparent;
+    content: "";
+    height: 0px;
+    width: 0px;
+    border-top-width: 8vh;
+    border-right-width: 0px;
+    border-bottom-width: 8vh;
+    border-left-width: 100vw;
+    border-left-color: #1DDDB4;
+}
+.triagle2{
+    position: absolute;
+    border: solid transparent;
+    content: "";
+    height: 0px;
+    width: 0px;
+    border-top-width: 16vh;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 80vw;
+    border-left-color: #14967A;
+}
+.wrapper{
+    padding-right: 30px;
+    max-width: 600px;
+    position: relative;
+}
+.wrapper::before{
+    position: absolute;
+    border: 2px solid white;
+    content: "";
+    height: 100%;
+    right: 0;
+    bottom: 15px;
+    left: 15px;
+}
+.login-wrapper{
+    width: 100%;
+    padding-top: 60px;
+}
+.carousel{
+    display: flex;
+    width: 100%;
+}
+.carousel .slide{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.carousel-item{
+    width: 100%;
+    height: 300px;
+}
+.carousel-inner{
+    width: 100%;
+}
+.carousel-indicators{
+    position: relative;
+    margin: 0px;
+    display: block;
+}
+.carousel-indicators li{
+    width: 10px;
+    height: 10px;
+    background: transparent;
+    position: relative;
+    margin: 0;
+    margin-right: 30px;
+    border: 1px solid #1DDDB4;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.carousel-indicators .active{
+    background: #1DDDB4 ;
+    box-shadow: 0 0 0 0px #1DDDB4;
+    border: 1px solid #1DDDB4 ;
+    border-radius: 50%;
+}
+.carousel-indicators .active .point {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #1DDDB4 ;
+    margin-left: -4px;
+    margin-top: -4px;
+}
+.carousel-indicators li{
+    margin: 0px;
+    margin-right: 30px;
+    margin-bottom:30px ;
+    display: block;
+}
+.line{
+    position: absolute;
+    top: 8px;
+    left: 4px;
+    width: 1px;
+    height: 31px;
+    border-left: 1px solid #1DDDB4;
+}
+.login-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login{
+    position: relative;
+    width: 60%;
+    background-color: white;
+    border-radius: 20px;
+}
+.login-text{
+    width: 100%;
+    display: flex;
+    margin-top: 30px;
+}
+.retangle-login{
+    position: absolute;
+    left: -10px;
+    width: 20px;
+    height: 70px;
+    background: #1DDDB4;
+}
+.text-login{
+    margin-top: 15px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    align-items:center;
+    color: #1DDDB4;
+}
+.text-login h1{
+    font-size: 45px;
+}
+.circle{
+    position: absolute;
+    right: -35px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #1DDDB4;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.circle svg{
+    height: 64px;
+    width: 64px;
+}
+
+.input-infor{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    margin-top: 30px;
+}
+.input-infor:first-child{
+    margin-top: 50px;
+}
+input{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    border-bottom: 3px solid rgba(0, 0, 0, 0.53);;
+    margin: 20px;
+    width: 100%;
+    font-size: 32px;
+}
+input:focus{
+    outline: 0px;
+}
+.submit-button{
+    margin-top: 30px;
+    margin-bottom: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.button-submit{
+    font-size: 32px;
+    padding: 8px 16px;
+    background-image: linear-gradient(to bottom right, #1DDDB4, #14967A);;
+    color:white;
+    border-radius: 20px;
+    width: 50%;
+    text-align: center;
+    text-decoration: none;
+}
+.button-submit:hover{
+    text-decoration: none;
+    color: white;
+}
+
+@media only screen and (min-width:576px){
+    .carousel{
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 10px;
+    }
+    .login-wrapper{
+        padding-top: 30px;
+    }
+    .triagle-wrapper{
+        height: 12vh;
+    }
+    .triagle2{
+        border-top-width:12vh;
+    }
+    .triagle{
+        border-top-width: 6vh;
+        border-bottom-width: 6vh;
+    }
+    .text-login h1{
+        font-size: 40px;
+    }
+    .retangle-login{
+        height:50px
+    }
+}
+@media only screen and (max-width:576px){
+    .carousel{
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 10px;
+    }
+    .login-wrapper{
+        padding-top: 30px;
+    }
+    .triagle-wrapper{
+        height: 10vh;
+    }
+    .triagle2{
+        border-top-width:10vh;
+    }
+    .triagle{
+        border-top-width: 5vh;
+        border-bottom-width: 5vh;
+    }
+    .text-login h1{
+        font-size: 30px;
+    }
+    .retangle-login{
+        height:70px
+    }
+    .input-infor:first-child{
+        margin-top:10px;
+    }
+    input{
+        font-size: 25px;
+    }
+    .button-submit{
+        font-size: 25px;
+    }
+}
+@media only screen and (min-width:768px){
+    .carousel{
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 20px;
+    }
+    .triagle-wrapper{
+        height: 18vh;
+    }
+    .triagle2{
+        border-top-width:16vh;
+    }
+    .triagle{
+        border-top-width: 8vh;
+        border-bottom-width: 8vh;
+    }
+    .text-login h1{
+        font-size: 45px;
+    }
+    .retangle-login{
+        height:70px
+    }
+}

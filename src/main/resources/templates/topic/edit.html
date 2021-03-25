@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form th:action="@{save}" th:object="${topic}" th:method="post">
+        name: <input type="text" th:field="*{name}">
+        code: <input type="text" th:field="*{code}">
+        deadline: <input type="date" th:field="*{deadline}">
+        close date: <input type="date" th:field="*{closeDate}"/>
+        <textarea th:field="*{description}" id="" cols="30" rows="10"></textarea>
+        <input type="hidden" th:field="*{id}">
+        <input type="submit" value="submit">
+    </form>
+</body>
+</html>

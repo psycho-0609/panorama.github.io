@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="common/link :: header-css"/>
+</head>
+<body>
+<div th:replace="common/header :: header"/>
+
+<div class="container">
+    <div th:if="${message != null}" class="alert alert-success">[[${message}]]</div>
+    <a class="btn btn-primary" th:href="@{/faculty/edit}">New Faculty</a>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Sub Name</th>
+            <th></th>
+        </tr>
+        <tr th:each="item:${faculties}">
+            <td th:text="${item.id}"/>
+            <td th:text="${item.name}"/>
+            <td th:text="${item.code}"/>
+            <td>
+                <a class="btn btn-warning" th:href="@{'/faculty/edit?id='+${item.id}}">Edit</a>
+                <a class="btn btn-danger" th:href="@{'/faculty/delete/'+${item.id}}">Delete</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div th:replace="common/footer :: footer"/>
+</body>
+</html>

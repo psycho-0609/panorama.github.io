@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="common/link :: header-css"/>
+</head>
+<body>
+<div th:replace="common/header :: header"/>
+
+<div class="container">
+    <a th:href="@{/coordinator/edit}" class="btn btn-primary">New coordinator</a>
+    <table class="table table-light text-center" >
+        <tr class="thead-dark">
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Date of Birth</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Faculty</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="item:${coordinators}">
+            <td th:text="${item.id}"/>
+            <td th:text="${item.name}"/>
+            <td th:text="${item.email}"/>
+            <td th:text="${#dates.format(item.dob,'dd-MM-yyyy')}"/>
+            <td th:text="${item.address}"/>
+            <td th:text="${item.phone}"/>
+            <td th:text="${item.faculty.name}"/>
+            <td>
+                <a th:href="@{'/coordinator/edit/'+${item.id}}" class="btn btn-warning">Edit</a>
+                <a th:href="@{'/coordinator/delete/'+${item.id}}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div th:replace="common/footer :: footer"/>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="common/link :: header-css"/>
+</head>
+<body>
+<div th:replace="common/header :: header"/>
+    <form th:object="${guest}" th:action="@{/guest/add}" th:method="post">
+        <div class="form-group">
+            <label for="">ID</label>
+            <input type="text" th:field="*{id}" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="">Name</label>
+            <input type="text" th:field="*{name}" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="">Email</label>
+            <input type="text" th:field="*{email}" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="">Faculty</label>
+            <select th:field="*{faculty}" class="custom-select">
+                <option th:each="fac:${faculties}" th:value="${fac.id}" th:text="${fac.name}"/>
+            </select>
+        </div>
+        <input type="submit" value="Add" class="btn btn-primary">
+    </form>
+<div th:replace="common/footer :: footer"/>
+</body>
+</html>

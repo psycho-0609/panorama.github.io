@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="common/link :: header-css"/>
+    <link rel="stylesheet" th:href="@{'/css/detail.css'}">
+</head>
+<body>
+<div th:replace="common/header :: header"/>
+<div class="container">
+    <th:block th:if="${message != null}">
+        <div class="alert alert-primary text-success">[[${message}]]</div>
+    </th:block>
+    <div class="rp-show-wrapper">
+        <div class="wrapper">
+            <div class="rp-img">
+                <img th:src="${article.imagePath}" alt="">
+            </div>
+            <div class="rp-discrible-wrapper">
+                <div class="title">
+                    <h1>[[${article.title}]]</h1>
+                    <hr>
+                </div>
+                <div class="discrible">
+                    <div class="author">
+                        <h5>Author:</h5>
+                        <p>[[${article.student.email}]]</p>
+                    </div>
+                    <div class="author">
+                        <h5>Status:</h5>
+                        <th:block th:switch="${article.status}">
+                            <p id="status" class="text-warning" th:case="-1">Not yet rated</p>
+                            <p id="status" class="text-danger" th:case="0">Disable</p>
+                            <p id="status" class="text-success" th:case="1">Accepted</p>
+                        </th:block>
+                    </div>
+                </div>
+                <div class="rp-button">
+                    <div class="button">
+                        <a th:href="@{${article.filePath}}">View</a>
+                    </div>
+                    <!--                    <div class="button">-->
+                    <!--                        <a th:href="@{'/article/download/'+${article.id}}">Download</a>-->
+                    <!--                    </div>-->
+                    <div class="button special">
+                        <th:block sec:authorize="hasAuthority('COORDINATOR')">
+                            <a href="" id="make-a-grade">Censorship</a>
+                            <div class="grade" id='disable'>
+                                <a th:href="@{'/article/manager/status/'+${article.topic.code}+'/'+${article.id}+'/0'}">Reject</a>
+                            </div>
+                            <div class="grade" id='active'>
+                                <a th:href="@{'/article/manager/status/'+${article.topic.code}+'/'+${article.id}+'/1'}"
+                                >Accept</a>
+                            </div>
+                        </th:block>
+                    </div>
+
+                </div>
+                <hr>
+                <div sec:authorize="hasAuthority('STUDENT')">
+                    <th:block th:if="${article.comment != null && !article.comment.equals('')}">
+                        <h5>Feedback of coordinator</h5>
+                        <blockquote>[[${article.comment}]]</blockquote>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+
+        <div sec:authorize="hasAuthority('COORDINATOR')">
+            <hr>
+<!--            <th:block th:if="${article.getCreatedDate().after(disableCommentDate)}">-->
+                <form th:action="@{/article/manager/comment}" th:method="post" id="cmt">
+                    <div class="input-cmt-wrapper">
+                        <label class="input-sizer stacked">
+                            <textarea oninput="this.parentNode.dataset.value = this.value" rows="1"
+                                      placeholder="Type a Comment..." name='comment' form="cmt"
+                                      th:text="${article.comment}"></textarea>
+                        </label>
+                        <input type="hidden" th:value="${article.id}" name="id"/>
+                        <div class="button-tele">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+<!--            </th:block>-->
+<!--            <th:block th:if="${article.getCreatedDate().before(disableCommentDate)}">-->
+<!--                <p>You can not comment</p>-->
+<!--            </th:block>-->
+        </div>
+
+    </div>
+</div>
+
+<div th:replace="common/footer :: footer"/>
+<script th:src="@{/js/detail.js}"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <div th:replace="common/link :: header-css"/>
+</head>
+<body>
+    <div th:replace="common/header :: header"/>
+
+    <div class="container">
+        <div class="row">
+            <div th:each="item: ${articles}" class="col-md-4">
+                <div class="card" style="width: 100%;">
+                    <img th:src="${item.imagePath}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">[[${item.title}]]</h5>
+                        <p>[[${item.name}]]</p>
+                        <a th:href="@{${item.filePath}}" class="btn btn-warning">View</a>
+                        <th:block th:if="${item.topic.closeDate.before(#dates.createNow())}">
+                            <a th:href="@{'/article/download?id='+${item.id}}" class="btn btn-primary">download</a>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="common/footer :: footer"/>
+</body>
+</html>

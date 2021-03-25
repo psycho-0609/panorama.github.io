@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="common/link :: header-css"/>
+    <link rel="stylesheet" th:href="@{/css/management-report.css}">
+</head>
+<body>
+<div th:replace="common/header :: header"/>
+<div class="container">
+    <div class="alert alert-success" th:if="${message!= null}">[[${message}]]</div>
+    <th:block th:if="${topic.deadline.after(#dates.createNow())}">
+        <a class="btn btn-primary" th:href="@{'/article/post/'+${topic.code}+'/edit'}">Submit article</a>
+    </th:block>
+
+
+    <div class="rp-show-wrapper" th:each="item:${articles}">
+
+        <div class="wrapper">
+            <div class="rp-img">
+                <img th:src="@{${item.imagePath}}" alt="">
+            </div>
+            <div class="rp-discrible-wrapper">
+                <div class="title">
+                    <h1>[[${item.title}]]</h1>
+                    <hr>
+                </div>
+                <div class="discrible">
+                    <div class="author">
+                        <h5>Author:</h5>
+                        <p>[[${item.student.email}]]</p>
+                    </div>
+                    <div class="author">
+                        <h5 >Status:</h5>
+                        <th:block th:if="${item.status == 1}">
+                            <p class="text-success">Accepted</p>
+                        </th:block>
+                        <th:block th:if="${item.status == 0}">
+                            <p class="text-danger">Disable</p>
+                        </th:block>
+                        <th:block th:if="${item.status == -1}">
+                            <p class="text-warning">Not yet rated</p>
+                        </th:block>
+                    </div>
+                     </div>
+                <div class="rp-button">
+                    <div class="button">
+                        <a th:href="@{'/article/detail/'+${item.id}}">Detail</a>
+                    </div>
+
+                    <div class="button" th:if="${item.topic.closeDate.after(#dates.createNow())}">
+                        <a class="btn-danger" th:href="@{'/article/delete/'+${item.topic.code}+'/'+${item.id}}" onclick="if (!confirm('Are you sure to delete this article ?')) return false">Delete</a>
+                    </div>
+                </div>
+                <div th:if="${item.comment != null && !item.comment.equals('')}">
+                    <a style="color: #7700ff" th:href="@{'/article/detail/'+${item.id}}">Feedback available</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

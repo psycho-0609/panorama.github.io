@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="common/link :: header-css"/>
+</head>
+<body>
+<div th:replace="common/header :: header"/>
+<table class="table text-center bg-light">
+    <tr class="thead-dark">
+        <th>Faculty</th>
+        <th>Coordinator</th>
+        <th>Total Article</th>
+        <th>%/total article</th>
+        <th>Rejected article</th>
+        <th>Accepted article</th>
+    </tr>
+    <tr th:each="item:${faculties}">
+        <td><a style="color: blue" th:href="@{'/article/statistics-report/'+${item.id}}">[[${item.name}]]</a></td>
+        <td>
+            <th:block th:each="coordinator:${item.coordinatorEntity}" th:text="${coordinator.email}"></th:block>
+        </td>
+        <td th:text="${item.totalArticle}"/>
+        <td th:text="${item.percent} +'%'"/>
+        <td th:text="${item.rejectedArticle}"/>
+        <td th:text="${item.acceptedArticle}"/>
+    </tr>
+
+</table>
+
+<div th:replace="common/footer :: footer"/>
+</body>
+</html>

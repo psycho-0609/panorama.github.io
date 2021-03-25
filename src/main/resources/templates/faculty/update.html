@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="common/link :: header-css"/>
+</head>
+<body>
+<div class="content-submit col-5">
+    <h1>ĐÂY LÀ TÊN FORM INPUT</h1>
+    <form class="row" th:object="${faculty}" th:action="@{/faculty/update}" method="post">
+        <div class="form-group">
+            <label for="name">ID</label>
+            <input class="form-control" type="text" th:field="*{id}" disabled />
+            <input type="hidden" th:field="*{id}">
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" type="text" th:field="*{name}"  />
+
+        </div>
+        <div class="form-group">
+            <label for="name">Sub Name</label>
+            <input class="form-control" type="text" th:field="*{code}" />
+
+        </div>
+        <div class="col-2"><input type="submit" class="btn btn-primary" value="SUBMIT"></div>
+    </form>
+</div>
+
+<div th:replace="common/footer :: footer"/>
+</body>
+</html>

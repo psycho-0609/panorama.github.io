@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <th:block  th:replace="common/link :: header-css"/>
+    <link rel="stylesheet" th:href="@{/css/management-report.css}">
+</head>
+<body style="background-color: #1DDDB4">
+<div th:replace="common/header :: header"/>
+
+<div class="container">
+    <div class="rp-categories-wrapper" role="tablist">
+        <div class="title-tp"><h2>[[${topic.name}]]</h2></div>
+        <ul class="nav nav-tabs tab-category" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#new-article" role="tab"
+                   aria-controls="home" aria-selected="true">NEW ARTICLE</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#disable-article" role="tab"
+                   aria-controls="profile" aria-selected="false">ACCEPTED</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#active-article" role="tab"
+                   aria-controls="contact" aria-selected="false">REJECTED</a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="new-article" role="tabpanel" aria-labelledby="pills-new-tab">
+
+            <th:block th:if="${newArticle.size() > 0}">
+                <div class="rp-show-wrapper" th:each="item:${newArticle}">
+                    <div class="wrapper">
+                        <div class="rp-img">
+                            <img th:src="@{${item.imagePath}}" alt="">
+                        </div>
+                        <div class="rp-discrible-wrapper">
+                            <div class="title">
+                                <h1>[[${item.title}]]</h1>
+                                <hr>
+                            </div>
+                            <div class="discrible">
+                                <div class="author">
+                                    <h5>Author:</h5>
+                                    <p>[[${item.student.email}]]</p>
+                                </div>
+                                <div class="author">
+                                    <h5 >Status:</h5>
+                                    <p class="text-warning" id="status">Not yet rated</p>
+                                </div>
+                            </div>
+                            <div class="rp-button">
+                                <div class="button">
+                                    <a th:href="@{'/article/detail/'+${item.id}}">Detail</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+            <th:block th:if="${newArticle.size() <= 0}">
+                <p>Not any Article</p>
+            </th:block>
+
+        </div>
+        <div class="tab-pane fade" id="disable-article" role="tabpanel" aria-labelledby="pills-home-tab">
+            <th:block th:if="${articlesEnable.size() > 0}">
+                <div class="rp-show-wrapper" th:each="item:${articlesEnable}">
+                    <div class="wrapper">
+                        <div class="rp-img">
+                            <img th:src="@{${item.imagePath}}" alt="">
+                        </div>
+                        <div class="rp-discrible-wrapper">
+                            <div class="title">
+                                <h1>[[${item.title}]]</h1>
+                                <hr>
+                            </div>
+                            <div class="discrible">
+                                <div class="author">
+                                    <h3>Author:</h3>
+                                    <p>[[${item.student.email}]]</p>
+                                </div>
+                                <div class="author">
+                                    <h5 >Status:</h5>
+                                    <p class="text-danger" id="status">Disable</p>
+                                </div>
+                            </div>
+                            <div class="rp-button">
+                                <div class="button">
+                                    <a th:href="@{'/article/detail/'+${item.id}}">Detail</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+            <th:block th:if="${articlesEnable.size() <= 0}">
+                <p>Not any Article</p>
+            </th:block>
+
+        </div>
+        <div class="tab-pane fade" id="active-article" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <th:block th:if="${articlesActive.size() > 0}">
+                <div class="rp-show-wrapper" th:each="item:${articlesActive}">
+                    <div class="wrapper">
+                        <div class="rp-img">
+                            <img th:src="@{${item.imagePath}}" alt="">
+                        </div>
+                        <div class="rp-discrible-wrapper">
+                            <div class="title">
+                                <h1>[[${item.title}]]</h1>
+                                <hr>
+                            </div>
+                            <div class="discrible">
+                                <div class="author">
+                                    <h5>Author:</h5>
+                                    <p>[[${item.student.email}]]</p>
+                                </div>
+                                <div class="author">
+                                    <h5>Status:</h5>
+                                    <p class="text-sucess" id="status">Accepted</p>
+                                </div>
+                            </div>
+                            <div class="rp-button">
+                                <div class="button">
+                                    <a th:href="@{'/article/detail/'+${item.id}}">Detail</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+            <th:block th:if="${articlesActive.size() <= 0}">
+                <p>Not any Article</p>
+            </th:block>
+
+        </div>
+    </div>
+</div>
+<div th:replace="common/footer :: footer"/>
+</body>
+</html>

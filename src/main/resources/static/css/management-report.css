@@ -1,0 +1,172 @@
+.container {
+    margin-top: 30px;
+    margin-bottom: 100px;
+}
+
+.rp-categories-wrapper {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.title-tp {
+    padding-left: 30px;
+}
+
+.tab-category {
+    border: none;
+    width: auto;
+}
+
+.tab-category li, .tab-category a {
+    height: 100%;
+}
+
+.categories {
+    display: flex;
+}
+
+.rp-show-wrapper {
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 30px;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.rp-img img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.rp-discrible-wrapper {
+    padding-left: 20px;
+    width: 100%;
+}
+
+.discrible {
+    width: 100%;
+}
+
+.author, .status {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.author p, .status h4 {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.status h4 {
+    color: red;
+}
+
+.rp-button {
+    padding: 20px 0px;
+    display: flex;
+}
+
+.button {
+    margin: 0px 10px;
+}
+
+.button:first-child {
+    margin-left: 0px;
+}
+
+.button:last-child {
+    margin-right: 0px;
+}
+
+.button a {
+    padding: 8px 16px;
+    border-radius: 10px;
+    background-color: #1DDDB4;
+}
+
+.button a:hover {
+    color: white;
+    background-color: #038f70;
+}
+
+.input-cmt-wrapper {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.input-cmt-wrapper input {
+    width: 80%;
+    border-radius: 30px;
+    background-color: rgb(196, 196, 196);
+}
+
+.button-tele {
+    display: flex;
+    align-items: center;
+}
+
+.telegram {
+    width: 32px;
+    height: 32px;
+    color: #1DDDB4;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.telegram:hover {
+    color: #038f70;
+}
+
+.telegram:active {
+    color: #1DDDB4;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0.2rem rgba(77, 245, 209, 0.651);
+}
+
+.last-cmt-wrapper {
+    margin-top: 20px;
+}
+
+.cmt-wrapper {
+    margin-top: 10px;
+}
+
+.cmt {
+    display: inline-block;
+    background-color: rgb(196, 196, 196);
+    border-radius: 15px;
+    padding: 5px 10px;
+}
+
+.footer {
+    background-color: #1DDDB4;
+}
+
+@media only screen and (max-width: 1140px) {
+    .rp-categories-wrapper {
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    .wrapper {
+        display: block;
+    }
+
+    .rp-img {
+        text-align: center;
+    }
+    .rp-discrible-wrapper {
+        padding-left: 0px;
+    }
+    .wrapper .title {
+        text-align: center;
+    }
+}

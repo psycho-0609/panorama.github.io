@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="common/link :: header-css"/>
+</head>
+<body>
+    <div th:replace="common/header :: header"/>
+
+    <div class="container">
+        <div class="alert alert-success" th:if="${message != null}">[[${message}]]</div>
+        <a th:href="@{/student/edit}" class="btn btn-primary">New Student</a>
+        <table class="table table-light bg-light">
+            <tr class="thead-dark">
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Date of Birth</th>
+                <th>Faculty</th>
+                <th>Action</th>
+            </tr>
+            <tr th:each="item:${students}">
+                <td th:text="${item.id}"/>
+                <td th:text="${item.name}"/>
+                <td th:text="${item.email}"/>
+                <td th:text="${item.address}"/>
+                <td th:text="${#dates.format(item.dob,'dd-MM-yyyy')}"/>
+                <td th:text="${item.faculty.name}"/>
+                <td>
+                    <a class="btn btn-warning" th:href="@{'/student/edit/'+${item.id}}">Edit</a>
+                    <a class="btn btn-danger" onclick="if(!confirm('Are you sure to delete this student')) return false" th:href="@{'/student/delete/'+${item.id}}">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div th:replace="common/footer :: footer"/>
+</body>
+</html>

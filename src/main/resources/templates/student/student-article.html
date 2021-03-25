@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="common/link :: header-css"/>
+</head>
+<body>
+    <div th:replace="common/header :: header"/>
+
+    <th:block th:if="${student != null}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <table class="table">
+                        <tr th:each="item: ${articles}">
+                            <td>[[${item.title}]]</td>
+                            <td style="width: 100px;">
+                                <img style="width: 100%" th:src="${item.imagePath}" alt="">
+                                <a th:href="@{'/article/download?id='+${item.id}}">[[${item.name}]]</a>
+                            </td>
+                            <td th:text="${item.topic.name}"></td>
+
+                            <td>
+                                <th:block th:if="${item.status == true}">
+                                   Active
+                                </th:block>
+                                <th:block th:if="${item.status == false}">
+                                    Disable
+                                </th:block>
+                            </td>
+                            <td> <a th:href="@{'/article/detail/'+${item.id}}" class="btn btn-warning">Detail</a></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-4">
+                    <p>Student Id: [[${student.id}]]</p>
+                    <p>Name: [[${student.name}]]</p>
+                    <p>Email: [[${student.email}]]</p>
+                    <p >Article have submitted: [[${articles.size()}]]</p>
+                    <p>Active: [[${numberArticleActive}]]</p>
+                    <p>Disable: [[${numberArticleDisable}]]</p>
+
+                </div>
+            </div>
+        </div>
+
+    </th:block>
+    <th:block th:if="${student == null}">
+        <h6>[[${messageError}]]</h6>
+    </th:block>
+
+
+    <div th:replace="common/footer :: footer"/>
+</body>
+</html>

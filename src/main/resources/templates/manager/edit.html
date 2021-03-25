@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <form  th:action="@{/manager/save}" th:object="${manager}" th:method="post">
+        Id: <input type="text" th:field="*{id}">
+        <br>
+        Name: <input type="text" th:field="*{name}">
+        <br>
+        Email: <input type="text" th:field="*{email}">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

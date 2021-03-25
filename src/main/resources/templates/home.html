@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="common/link :: header-css"/>
+</head>
+<body>
+<div th:replace="common/header :: header"/>
+<link rel="stylesheet" th:href="@{/css/home.css}">
+<div class="title">
+    <h1 data-aos="fade-up-right">SPOTLIGHT ARTICLE</h1>
+</div>
+<div class="major-div">
+    <div class="panel row">
+        <div class="col-4 article-1">
+            <img th:src="@{/image/L001.jpg}" alt="" data-aos="fade-down">
+        </div>
+        <div class="col-8 show-right">
+            <div class="row">
+                <div class="col-12 title-major">
+                    <h2>Major 1</h2>
+                </div>
+                <div class="col-6 article-1">
+                    <img th:src="@{/image/wallpaperflare.com_wallpaper.jpg}" alt="" data-aos="fade-up">
+                </div>
+                <div class="col-6 article-1">
+                    <img src="/image/office.jpg" alt="" data-aos="fade-up">
+                </div>
+            </div>
+        </div>
+        <div class="bottom-wrapper row">
+            <div class="col-5 article-1">
+                <img th:src="@{/image/as.jpg}" alt="" data-aos="fade-right">
+            </div>
+            <div class="col-7 article-1">
+                <img th:src="@{/image/s.jpg}" alt="" data-aos="fade-left">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="major-div-1">
+    <div class="panel row">
+        <div class="col-4 article-1">
+            <img src="/image/L001.jpg" alt="" data-aos="fade-down">
+        </div>
+        <div class="col-8 show-right">
+            <div class="row">
+                <div class="col-12 title-major">
+                    <h2>Major 2</h2>
+                </div>
+                <div class="col-6 article-1">
+                    <img src="/image/office1.jpg" alt="" data-aos="fade-up">
+                </div>
+                <div class="col-6 article-1">
+                    <img src="/image/office.jpg" alt="" data-aos="fade-up">
+                </div>
+            </div>
+        </div>
+        <div class="bottom-wrapper row">
+            <div class="col-5 article-1">
+                <img src="/image/as.jpg" alt="" data-aos="fade-right">
+            </div>
+            <div class="col-7 article-1">
+                <img src="/image/s.jpg" alt="" data-aos="fade-left">
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="common/footer :: footer"/>
+</body>
+</html>

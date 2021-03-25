@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="common/link :: header-css"/>
+</head>
+<body>
+    <div th:replace="common/header :: header"/>
+
+    <table class="table mt-5 text-center">
+        <tr class="thead-dark">
+            <th>Topic</th>
+            <th>Close Date</th>
+            <th>Final Close Date</th>
+            <th>Total Article</th>
+            <th>Accepted Article</th>
+            <th>Reject Article</th>
+        </tr>
+        <tr th:each="item:${topics}">
+            <td><a th:href="@{'/faculty/report/'+${item.id}}">[[${item.name}]]</a></td>
+            <td th:text="${#dates.format(item.deadline,'dd-MM-yyyy')}">
+            <td th:text="${#dates.format(item.finalCloseDate,'dd-MM-yyyy')}">
+            <td th:text="${item.totalArticle}">
+            <td th:text="${item.acceptedArticle}">
+            <td th:text="${item.rejectedArticle}">
+        </tr>
+    </table>
+
+    <div th:replace="common/footer :: footer"/>
+</body>
+</html>
