@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import java.text.ParseException;
 
 @Controller
-@RequestMapping("/faculty")
+@RequestMapping("faculty")
 public class FacultyController {
 
     @Autowired
