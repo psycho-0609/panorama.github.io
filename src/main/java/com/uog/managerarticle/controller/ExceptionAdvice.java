@@ -10,6 +10,6 @@ public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
     public String exceptionHandler(Exception e, Model model){
         model.addAttribute("message",e.getMessage());
-        return "/404";
+        return "404";
     }
 }

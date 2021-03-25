@@ -33,20 +33,20 @@ public class ManagerController {
     @GetMapping("/list")
     public String showAll(Model model){
         model.addAttribute("managers",managerService.findAll());
-        return "/manager/list";
+        return "manager/list";
     }
 
     @GetMapping("/edit")
     public String addManager(Model model){
         MarketingManagerEntity entity = new MarketingManagerEntity();
         model.addAttribute("manager",entity);
-        return "/manager/add";
+        return "manager/add";
     }
     @GetMapping("/edit/{id}")
     public String editManager(@PathVariable("id") String id, Model model) throws Exception {
         MarketingManagerEntity entity = managerService.findById(id);
         model.addAttribute("manager",entity);
-        return "/manager/edit";
+        return "manager/edit";
     }
 
     @PostMapping("/save")

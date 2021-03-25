@@ -53,7 +53,7 @@ public class ArticleController {
     @GetMapping("/list")
     public String showAllAcceptedArticle(Model model) {
         model.addAttribute("articles", articleService.findAllByStatus(1));
-        return "/index";
+        return "index";
     }
 
 //    @GetMapping("/post/{code}/edit")
@@ -116,7 +116,7 @@ public class ArticleController {
             return "redirect:/article/post/"+topicCode;
         }
         model.addAttribute("article", article);
-        return "/article/update";
+        return "article/update";
     }
 
 

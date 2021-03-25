@@ -29,19 +29,19 @@ public class FacultyController {
     @GetMapping("/statistics-report")
     public String report(Model model){
         model.addAttribute("faculties",facultyService.findAllForStatisticsReportByFaculty());
-        return "/faculty/report";
+        return "faculty/report";
     }
 
     @GetMapping("/exception-report")
     public String exceptionReport(Model model) throws ParseException {
         model.addAttribute("faculties",facultyService.findAllForExceptionReport());
-        return "/faculty/exception-report";
+        return "faculty/exception-report";
     }
 
     @GetMapping("/list")
     public String showAll(Model model){
         model.addAttribute("faculties",facultyService.findAll());
-        return "/faculty/list";
+        return "faculty/list";
     }
 
     @GetMapping("/edit")
@@ -50,25 +50,25 @@ public class FacultyController {
         if(id == null){
             facultyEntity = new FacultyEntity();
             model.addAttribute("faculty",facultyEntity);
-            return "/faculty/add";
+            return "faculty/add";
 
         }else{
             facultyEntity = facultyService.findById(id);
             model.addAttribute("faculty",facultyEntity);
-            return "/faculty/update";
+            return "faculty/update";
         }
     }
 
     @PostMapping("/add")
     public String save(@Valid @ModelAttribute("faculty") FacultyEntity facultyEntity, BindingResult bindingResult, RedirectAttributes ra, Model model){
         if(bindingResult.hasErrors()){
-            return "/faculty/add";
+            return "faculty/add";
         }
 
         try {
             facultyService.findById(facultyEntity.getId());
             model.addAttribute("message", "Faculty ID existed");
-            return "/faculty/add";
+            return "faculty/add";
 
         }catch (Exception e){
             FacultyEntity facultySaved = facultyService.save(facultyEntity);

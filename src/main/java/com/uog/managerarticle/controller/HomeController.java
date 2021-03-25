@@ -14,13 +14,13 @@ public class HomeController {
 
     @RequestMapping("/")
     public String HomePage(Model model){
-        model.addAttribute("articles",articleService.findAllByStatus(1));
-        return "/home";
+//        model.addAttribute("articles",articleService.findAllByStatus(1));
+        return "home";
     }
 
     @RequestMapping("/home")
     public String home(){
-        return "/home";
+        return "home";
     }
 
 }

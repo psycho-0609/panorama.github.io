@@ -39,14 +39,14 @@ public class GuestController {
     @GetMapping("/list")
     public String findAll(Model model){
         model.addAttribute("guests",guestService.findAll());
-        return "/guest/list";
+        return "guest/list";
     }
 
     @GetMapping("/edit")
     public String addGuest(Model model, @RequestParam(value = "id",required = false) String id){
         model.addAttribute("guest",new GuestEntity());
         model.addAttribute("faculties",facultyService.findAll());
-        return "/guest/add";
+        return "guest/add";
     }
 
     @GetMapping(value = {"/edit/{id}"})
@@ -54,7 +54,7 @@ public class GuestController {
         GuestEntity guestEntity = guestEntity = guestService.findById(id);
         model.addAttribute("guest", guestEntity);
         model.addAttribute("faculties", facultyService.findAll());
-        return "/guest/edit";
+        return "guest/edit";
     }
 
     @PostMapping("/save")

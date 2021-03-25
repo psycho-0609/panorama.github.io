@@ -48,7 +48,7 @@ public class TopicController {
         if(id == null){
             topicEntity = new TopicEntity();
             model.addAttribute("topic", topicEntity);
-            return "/topic/add";
+            return "topic/add";
         } else {
             topicEntity = topicService.findById(id);
             model.addAttribute("topic", topicEntity);
