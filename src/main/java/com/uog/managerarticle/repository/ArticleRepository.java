@@ -44,4 +44,5 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, Long> {
     Long countAllByStudentFacultyIdAndComment(String id, String comment);
 
 
+    List<ArticleEntity> findAllByStudentIdAndTopicCodeAndStatus(String id, String code, Integer status);
 }

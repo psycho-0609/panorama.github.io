@@ -14,8 +14,7 @@ public class EmailUntil {
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendEmailNotification(String toEmail, String message)
-            throws UnsupportedEncodingException, MessagingException {
+    public void sendEmailNotification(String toEmail, String message) throws UnsupportedEncodingException, MessagingException {
         String subject = "New Article have submitted";
         String senderName = "Support";
         String mailContent = message;

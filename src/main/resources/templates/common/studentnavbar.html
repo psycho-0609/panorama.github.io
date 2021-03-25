@@ -1,19 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <script src="https://kit.fontawesome.com/0e8cd08e46.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <div class="link-header">
-        <a th:href="@{/topic/post}">Post Article</a>
-    </div>
-    <div class="link-header">
-        <a th:href="@{/student/article/list}">Your article</a>
-    </div>
+<div class="title-bar">Account</div>
+<div class="cate-bar">
+    <div class="cate-bar-title"><i class="fas fa-user"></i>Authentication <span><i
+            class="fas fa-angle-right"></i></span></div>
     <div class="link-header">
         <a th:href="@{/user/profile}">Your profile</a>
     </div>
+    <div class="link-header">
+        <form th:action="@{/logout}" method="post">
+            <button class="btn" type="submit"><a>Logout</a></button>
+        </form>
+    </div>
+</div>
+<div class="title-bar">Management</div>
+<div class="cate-bar">
+    <div class="cate-bar-title"><i class="fas fa-book-open"></i> Contributions <span><i
+            class="fas fa-angle-right"></i></span></div>
+    <div class="link-header">
+        <a th:href="@{/topic/post}">Topic</a>
+    </div>
+    <div class="link-header">
+        <a th:href="@{/student/article/list}">Article</a>
+    </div>
+</div>
+
 
 </body>
 </html>

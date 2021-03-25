@@ -4,39 +4,42 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <div th:replace="common/link :: header-css"/>
+    <link rel="stylesheet" th:href="@{'/css/list-table.css'}">
 </head>
 <body>
 <div th:replace="common/header :: header"/>
-
-<div class="container">
-    <a th:href="@{/coordinator/edit}" class="btn btn-primary">New coordinator</a>
-    <table class="table table-light text-center" >
-        <tr class="thead-dark">
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Date of Birth</th>
-            <th>Address</th>
-            <th>Phone</th>
-            <th>Faculty</th>
-            <th>Action</th>
-        </tr>
-        <tr th:each="item:${coordinators}">
-            <td th:text="${item.id}"/>
-            <td th:text="${item.name}"/>
-            <td th:text="${item.email}"/>
-            <td th:text="${#dates.format(item.dob,'dd-MM-yyyy')}"/>
-            <td th:text="${item.address}"/>
-            <td th:text="${item.phone}"/>
-            <td th:text="${item.faculty.name}"/>
-            <td>
-                <a th:href="@{'/coordinator/edit/'+${item.id}}" class="btn btn-warning">Edit</a>
-                <a th:href="@{'/coordinator/delete/'+${item.id}}" class="btn btn-danger">Delete</a>
-            </td>
-        </tr>
-    </table>
+<div class="container-area">
+    <div th:replace="common/side-bar :: side-bar"></div>
+    <div class="container">
+        <div class="alert alert-success" th:if="${message != null}">[[${message}]]</div>
+        <a th:href="@{/coordinator/edit}" class="btn btn-primary">New coordinator</a>
+        <table class="table table-light text-center">
+            <tr class="thead-dark">
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Date of Birth</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Faculty</th>
+                <th>Action</th>
+            </tr>
+            <tr th:each="item:${coordinators}">
+                <td th:text="${item.id}"/>
+                <td th:text="${item.name}"/>
+                <td th:text="${item.email}"/>
+                <td th:text="${#dates.format(item.dob,'dd-MM-yyyy')}"/>
+                <td th:text="${item.address}"/>
+                <td th:text="${item.phone}"/>
+                <td th:text="${item.faculty.code}"/>
+                <td>
+                    <a th:href="@{'/coordinator/edit/'+${item.id}}" class="btn btn-secondary">Edit</a>
+                    <a th:href="@{'/coordinator/delete/'+${item.id}}" class="btn btn-danger" onclick="if (!confirm('Are you sure to delete this Coordinator')) return false">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
-
 <div th:replace="common/footer :: footer"/>
 </body>
 </html>

@@ -8,8 +8,10 @@
 </head>
 <body>
 <div th:replace="common/header :: header"/>
-
+<div class="container-area">
+    <div th:replace="common/side-bar :: side-bar"></div>
     <div class="content-submit col-10">
+        <h1>Edit Student</h1>
         <form th:action="@{/student/update}" class="row" th:method="post" th:object="${student}">
             <div class="col-6">
                 <div class="form-group">
@@ -30,7 +32,13 @@
                 </div>
                 <div class="form-group">
                     <label for="">Email</label>
-                    <input type="text" class="form-control" th:field="*{email}">
+                    <th:block th:if="${student.email != null}">
+                        <input type="text" class="form-control" th:field="*{email}" disabled>
+                        <input type="hidden" th:field="*{email}">
+                    </th:block>
+                    <th:block th:if="${student.email == null}">
+                        <input type="text" class="form-control" th:field="*{email}">
+                    </th:block>
                     <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                 </div>
             </div>
@@ -59,10 +67,10 @@
                 <input type="text" class="form-control" th:field="*{address}">
                 <p class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
             </div>
-            <input  type="submit" class="btn btn-primary" value="Submit">
+            <input  type="submit" class="btn btn-primary col-3" value="Submit">
         </form>
     </div>
-
+</div>
 <div th:replace="common/footer :: footer"/>
 <script th:src="@{/js/adduser.js}"></script>
 </body>

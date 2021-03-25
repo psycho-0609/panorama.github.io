@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <div th:replace="common/link :: header-css"/>
+    <link rel="stylesheet" th:href="@{'/css/index.css'}">
 </head>
 <body>
-    <div th:replace="common/header :: header"/>
-
+<div th:replace="common/header :: header"/>
+<div class="container-area">
+    <div th:replace="common/side-bar :: side-bar"></div>
     <div class="container">
-        <div class="row">
-            <div th:each="item: ${articles}" class="col-md-4">
+        <div class="content-selected">
+            <div th:each="item: ${articles}" class="item-selected col-12">
                 <div class="card" style="width: 100%;">
                     <img th:src="${item.imagePath}" class="card-img-top" alt="...">
                     <div class="card-body">
@@ -25,7 +27,7 @@
             </div>
         </div>
     </div>
-
-    <div th:replace="common/footer :: footer"/>
+</div>
+<div th:replace="common/footer :: footer"/>
 </body>
 </html>

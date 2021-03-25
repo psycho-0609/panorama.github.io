@@ -19,8 +19,8 @@ public class MarketingManagerEntity {
     @NotNull(message = "Please input Name")
     private String name;
 
-    @NotNull(message = "Please input email")
-    @Email(message = "Invalid")
+    @NotNull(message = "Please input Email")
+    @Email(message = "Email Invalid")
     @Column(name = "email")
     private String email;
 
@@ -30,6 +30,9 @@ public class MarketingManagerEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Please input date of birth")
     private Date dob;
+
+    @NotNull(message = "Please input phone number")
+    private Integer phone;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
@@ -81,5 +84,13 @@ public class MarketingManagerEntity {
 
     public void setDob(Date dob) {
         this.dob = dob;
+    }
+
+    public Integer getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Integer phone) {
+        this.phone = phone;
     }
 }

@@ -4,6 +4,10 @@ import com.uog.managerarticle.entity.AccountEntity;
 
 import com.uog.managerarticle.entity.RoleEntity;
 import com.uog.managerarticle.repository.AccountRepository;
+import com.uog.managerarticle.service.ICoordinatorService;
+import com.uog.managerarticle.service.IGuestService;
+import com.uog.managerarticle.service.IManagerService;
+import com.uog.managerarticle.service.IStudentService;
 import com.uog.managerarticle.user.CustomUserDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,6 +26,7 @@ import java.util.List;
 public class CustomerUserDetailService implements UserDetailsService {
     private final AccountRepository accountRepository;
 
+
     @Autowired
     public CustomerUserDetailService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
@@ -34,13 +39,14 @@ public class CustomerUserDetailService implements UserDetailsService {
         if(entity == null){
             throw  new UsernameNotFoundException(userName);
         }
+
         List<GrantedAuthority> authorities = new ArrayList<>();
         for(RoleEntity roleEntity:entity.getRoles()){
             authorities.add(new SimpleGrantedAuthority(roleEntity.getName()));
         }
-        CustomUserDetail userDetail = new CustomUserDetail(entity.getUserName(),entity.getPassword(),
-                true,true,true,true,authorities);
+        CustomUserDetail userDetail = new CustomUserDetail(entity.getUserName(),entity.getPassword(), true,true,true,true,authorities);
         userDetail.setPosition(entity.getPosition());
+
         return userDetail;
 
     }

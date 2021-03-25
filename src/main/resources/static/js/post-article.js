@@ -33,18 +33,24 @@ $('a[href*="#submit-file-wrapper"]').click(function (event) {
 
 var inputs = document.querySelectorAll('.inputfile');
 Array.prototype.forEach.call(inputs, function (input) {
-    var nameInput = $(input).attr('name'),
-        label = document.querySelectorAll(nameInput + 'Label');
-    labelVal = label.innerHTML;
+    // var nameInput = $(input).attr('name'),
+    //     label = document.querySelectorAll(nameInput + 'Label');
+    // labelVal = label.innerHTML;
     input.addEventListener('change', function (e) {
+        label = $(this).closest('.form-upload').find('label');
+        labelVal = label.html();
         var fileName = '';
         fileName = e.target.value.split('\\').pop();
 
         if (fileName) {
-            $('#' + nameInput + 'Label p').text(fileName);
+            label.text(fileName);
         }
-        else
-            label.innerHTML = labelVal;
+        else {
+            label.html(labelVal);
+        }
+        if($(this).attr('name').includes('Edit')) {
+            label.css('background-color', '#5b92e5');
+        }
     });
 });
 
@@ -52,10 +58,9 @@ Array.prototype.forEach.call(inputs, function (input) {
 (function ($) {
     $.fn.attachmentUploader = function () {
         const uploadControl = $('.img-inputfile');
-        const btnClear = $('.cancel-button input');
         $(uploadControl).on('change', function (e) {
             console.log($(this));
-            const preview = $('.form-upload').children('.form-upload__preview');
+            const preview = $(this).closest('.form-upload').children('.form-upload__preview');
             const files = e.target.files;
 
             function previewUpload(file) {
@@ -78,11 +83,6 @@ Array.prototype.forEach.call(inputs, function (input) {
             }
 
             [].forEach.call(files, previewUpload);
-
-            btnClear.on('click', function () {
-                $('.form-upload__item').remove();
-                uploadControl.val('');
-            })
         })
     }
 })(jQuery)
@@ -91,11 +91,15 @@ $('.form-upload').attachmentUploader();
 
 
 $('.submit-wrapper span').click(function () {
-    $('.cover-hidden-submit-wrapper').removeClass('dp-none');
+    $(this).closest('.file-submission-form').find('.cover-hidden-submit-wrapper').removeClass('dp-none');
+})
+
+$('.button-edit-article a').click(function (e) {
+    e.preventDefault();
+    $(this).closest('.rp-show-wrapper').find('.cover-hidden-submit-wrapper').removeClass('dp-none');
 })
 
 $('#insert-form-submit').click(function () {
-
     if(validity('fileTitle', 'Please enter complete data') && validity('fileUpload', 'Please upload a File PDF') && validity('fileImage', 'Please Upload a Image')) {
         $('.cover-hidden-submit-wrapper').addClass('dp-none');
         $('.submit-wrapper span').addClass('dp-none');

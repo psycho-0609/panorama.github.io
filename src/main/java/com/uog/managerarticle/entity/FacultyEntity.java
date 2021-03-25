@@ -2,6 +2,7 @@ package com.uog.managerarticle.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
 
@@ -11,14 +12,15 @@ public class FacultyEntity {
 
     @Id
     @Column(name = "id")
-    @NotBlank(message = "is required")
+    @NotNull(message = "Please input ID")
     private String id;
 
-    @Column(name = "name")
-    @NotBlank(message = "is required")
+    @Column(name = "name", nullable = false)
+    @NotNull(message = "Please input Name Faculty")
     private String name;
 
-    @Column(name = "code")
+    @Column(name = "code", nullable = false)
+    @NotNull(message = "Please input Sub-name Faculty")
     private String code;
 
     @OneToMany(mappedBy = "faculty")

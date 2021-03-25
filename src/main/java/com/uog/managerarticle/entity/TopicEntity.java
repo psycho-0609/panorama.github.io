@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
 
@@ -15,20 +16,22 @@ public class TopicEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-//    @NotBlank(message = "is required")
+    @Column(name = "name", nullable = false)
+    @NotNull(message = "Please input Name")
     private String name;
 
-    @Column(name = "code")
-//    @NotBlank(message = "is required")
+    @Column(name = "code", nullable = false)
+    @NotNull(message = "Please input Sub-name")
     private String code;
 
     @Column(name = "deadline")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Please input Closure Date")
     private Date deadline;
 
     @Column(name = "close_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Please input Final Closure Date")
     private Date closeDate;
 
     private String description;

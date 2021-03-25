@@ -75,4 +75,9 @@ public class GuestServiceImp implements IGuestService {
         }
         repository.delete(entity.get());
     }
+
+    @Override
+    public GuestEntity findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
 }

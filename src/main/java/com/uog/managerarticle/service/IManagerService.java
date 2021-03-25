@@ -8,4 +8,5 @@ public interface IManagerService {
     MarketingManagerEntity findById(String id) throws Exception;
     Iterable<MarketingManagerEntity> findAll();
     MarketingManagerEntity update(MarketingManagerEntity managerEntity) throws Exception;
+    void delete(String id) throws Exception;
 }

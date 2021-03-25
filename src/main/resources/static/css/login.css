@@ -6,6 +6,7 @@
     font-style: normal;
     font-weight: bold;
 }
+
 h1{
     margin: 0px;
     text-align: center;
@@ -13,15 +14,18 @@ h1{
 img {
     max-width: 100%;
     max-height: 100%;
-    height: 100%;
     width: 100%;
+    height: auto;
 }
 .row{
     margin: 0px;
 }
 body{
-    background-image: url('../image/200629.jpg');
+    background-image: url(../image/200629.jpg);
     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
 }
 
 .triagle-wrapper{
@@ -82,7 +86,7 @@ body{
 }
 .carousel-item{
     width: 100%;
-    height: 300px;
+    max-height: 300px;
 }
 .carousel-inner{
     width: 100%;
@@ -225,6 +229,30 @@ input:focus{
 .button-submit:hover{
     text-decoration: none;
     color: white;
+
+
+}
+
+@media only screen and (max-width: 1024px) {
+    .login {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width:992px) {
+    .carousel {
+        /* display: none; */
+    }
+
+    .login {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    .submit-button {
+        margin: 0px;
+    }
 }
 
 @media only screen and (min-width:576px){
@@ -309,5 +337,17 @@ input:focus{
     }
     .retangle-login{
         height:70px
+    }
+}
+
+
+
+@media only screen and (max-width: 400px) {
+    .submit-button {
+        margin: 0px;
+    }
+
+    .carousel {
+        display: flex;
     }
 }

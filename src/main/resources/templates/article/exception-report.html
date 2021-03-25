@@ -8,87 +8,78 @@
 </head>
 <body>
 <div th:replace="common/header :: header"/>
-<div class="container">
-    <div class="rp-categories-wrapper" role="tablist">
-
-        <ul class="nav nav-tabs tab-category" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#new-article" role="tab"
-                   aria-controls="home" aria-selected="true">Articles without comment</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#disable-article" role="tab"
-                   aria-controls="profile" aria-selected="false">Articles without comment after 14 days</a>
-            </li>
-
-        </ul>
-    </div>
-
-
-    <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="new-article" role="tabpanel" aria-labelledby="pills-new-tab">
-
+<div class="container-area">
+    <div th:replace="common/side-bar::side-bar"/>
+    <div class="container">
+        <div class="rp-categories-wrapper" role="tablist">
+            <ul class="nav nav-tabs tab-category" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#new-article" role="tab"
+                       aria-controls="home" aria-selected="true" style="color: #495057">Articles without comment</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#disable-article" role="tab"
+                       aria-controls="profile" aria-selected="false" style="color: #495057">Articles without comment after 14 days</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="new-article" role="tabpanel" aria-labelledby="pills-new-tab">
                 <table class="table bg-light text-center table-striped">
                     <tr class="thead-dark">
                         <th>Title</th>
                         <th>Topic</th>
                         <th>Student</th>
-                        <th>Submitted Date</th>
                         <th>Status</th>
                     </tr>
                     <th:block th:if="${articlesNoCom.size() > 0}">
-                    <tr th:each="item:${articlesNoCom}">
-                        <td th:text="${item.title}"/>
-                        <td th:text="${item.topic.name}"/>
-                        <td th:text="${item.student.email}"/>
-                        <td th:text="${#dates.format(item.createdDate, 'dd-MM-yyyy')}"/>
+                        <tr th:each="item:${articlesNoCom}">
+                            <td th:text="${item.title}"/>
+                            <td th:text="${item.topic.name}"/>
+                            <td th:text="${item.student.email}"/>
 
-                        <td>
-                            <p th:if="${item.status == 1}">Accepted</p>
-                            <p th:if="${item.status == 0}">Rejected</p>
-                            <p th:if="${item.status == -1}">Not yet rate</p>
-                        </td>
+                            <td>
+                                <p th:if="${item.status == 1}">Accepted</p>
+                                <p th:if="${item.status == 0}">Rejected</p>
+                                <p th:if="${item.status == -1}">Not yet rate</p>
+                            </td>
 
-                    </tr>
+                        </tr>
                     </th:block>
                     <th:block th:if="${articlesNoCom.size() <= 0}">
 
                     </th:block>
                 </table>
+            </div>
+            <div class="tab-pane fade" id="disable-article" role="tabpanel" aria-labelledby="pills-home-tab">
+                <table class="table bg-light text-center table-striped">
+                    <tr class="thead-dark">
+                        <th>Title</th>
+                        <th>Topic</th>
+                        <th>Student</th>
+                        <th>Status</th>
 
-
-
-        </div>
-        <div class="tab-pane fade" id="disable-article" role="tabpanel" aria-labelledby="pills-home-tab">
-            <table class="table bg-light text-center table-striped">
-                <tr class="thead-dark">
-                    <th>Title</th>
-                    <th>Topic</th>
-                    <th>Student</th>
-                    <th>Submitted Date</th>
-                    <th>Status</th>
-
-                </tr>
-                <th:block th:if="${articlesNoComAf14.size() > 0}">
-                    <tr th:each="item:${articlesNoComAf14}">
-                        <td th:text="${item.title}"/>
-                        <td th:text="${item.topic.name}"/>
-                        <td th:text="${item.student.email}"/>
-                        <td th:text="${#dates.format(item.createdDate, 'dd-MM-yyyy')}"/>
-                        <td>
-                            <p th:if="${item.status == 1}">Accepted</p>
-                            <p th:if="${item.status == 0}">Rejected</p>
-                            <p th:if="${item.status == -1 }">Not yet rate</p>
-                        </td>
                     </tr>
-                </th:block>
-                <th:block th:if="${articlesNoComAf14.size() <= 0}">
+                    <th:block th:if="${articlesNoComAf14.size() > 0}">
+                        <tr th:each="item:${articlesNoComAf14}">
+                            <td th:text="${item.title}"/>
+                            <td th:text="${item.topic.name}"/>
+                            <td th:text="${item.student.email}"/>
+                            <td>
+                                <p th:if="${item.status == 1}">Accepted</p>
+                                <p th:if="${item.status == 0}">Rejected</p>
+                                <p th:if="${item.status == -1 }">Not yet rate</p>
+                            </td>
+                        </tr>
+                    </th:block>
+                    <th:block th:if="${articlesNoComAf14.size() <= 0}">
 
-                </th:block>
-            </table>
+                    </th:block>
+                </table>
+
+            </div>
 
         </div>
-
     </div>
 </div>
 <div th:replace="common/footer :: footer"/>

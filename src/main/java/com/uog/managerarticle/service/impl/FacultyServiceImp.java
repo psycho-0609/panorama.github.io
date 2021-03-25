@@ -39,7 +39,12 @@ public class FacultyServiceImp implements IFacultyService {
             faculty.setId(entity.getId());
             faculty.setName(entity.getName());
             faculty.setTotalArticle(totalArticleOfFal);
-            faculty.setPercent((float) (totalArticleOfFal*100/totalArticle));
+            if(totalArticle != 0) {
+                faculty.setPercent((float) (totalArticleOfFal*100/totalArticle));
+            }
+            else {
+                faculty.setPercent((float) 0);
+            }
             faculty.setCoordinatorEntity(entity.getMarketingCoordinators());
             faculty.setAcceptedArticle(articleRepository.countAllByStudentFacultyIdAndStatus(entity.getId(),1));
             faculty.setRejectedArticle(articleRepository.countAllByStudentFacultyIdAndStatus(entity.getId(), 0));
@@ -103,13 +108,11 @@ public class FacultyServiceImp implements IFacultyService {
         final SimpleDateFormat df = new SimpleDateFormat( "dd-MM-yyyy" );
         Calendar calendar = GregorianCalendar.getInstance();
         Date now = new Date();
-        System.out.print("get article");
-        for(ArticleEntity entity:articleRepository.findAllByCommentAndStudentFacultyId(null,id)){
+        for(ArticleEntity entity:articleRepository.findAllByCommentAndStudentFacultyId(null, id)){
             calendar.setTime(entity.getCreatedDate());
-            calendar.add(GregorianCalendar.DATE,2);
+            calendar.add(GregorianCalendar.DATE,14);
             Date date = df.parse(df.format(calendar.getTime()));
-            System.out.print(date);
-            if(date.before(now)){
+            if(!date.before(now)){
                 entities.add(entity);
             }
         }

@@ -1,69 +1,287 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <div th:replace="common/link :: header-css"/>
-    <link rel="stylesheet" th:href="@{/css/management-report.css}">
+    <link rel="stylesheet" th:href="@{/css/detail.css}">
+    <link rel="stylesheet" th:href="@{/css/post-report.css}">
 </head>
 <body>
+
 <div th:replace="common/header :: header"/>
-<div class="container">
-    <div class="alert alert-success" th:if="${message!= null}">[[${message}]]</div>
-    <th:block th:if="${topic.deadline.after(#dates.createNow())}">
-        <a class="btn btn-primary" th:href="@{'/article/post/'+${topic.code}+'/edit'}">Submit article</a>
-    </th:block>
 
-
-    <div class="rp-show-wrapper" th:each="item:${articles}">
-
-        <div class="wrapper">
-            <div class="rp-img">
-                <img th:src="@{${item.imagePath}}" alt="">
-            </div>
-            <div class="rp-discrible-wrapper">
-                <div class="title">
-                    <h1>[[${item.title}]]</h1>
-                    <hr>
-                </div>
-                <div class="discrible">
-                    <div class="author">
-                        <h5>Author:</h5>
-                        <p>[[${item.student.email}]]</p>
+<div class="container-area">
+    <div th:replace="common/side-bar :: side-bar"/>
+    <div class="container-page">
+        <div class="header-wrap">
+            <div class="header-area">
+                <div class="content-header">
+                    <div class="first-content">
+                        <h1 th:text="'Submit article for ' + ${topic.name}"/>
+                        <p>It looks like you have completed the report and want to submit it now?<br>
+                            Complete the steps below so your report can be viewed by your Coordinator.</p>
                     </div>
-                    <div class="author">
-                        <h5 >Status:</h5>
-                        <th:block th:if="${item.status == 1}">
-                            <p class="text-success">Accepted</p>
+                    <div class="submit-button" id='go-to-submission-btn'>
+                        <th:block th:if="${topic.deadline.after(#dates.createNow())}">
+                            <span><a href="#submit-file-wrapper">Submit now! ▼</a></span>
                         </th:block>
-                        <th:block th:if="${item.status == 0}">
-                            <p class="text-danger">Disable</p>
+                        <th:block th:if="${topic.closeDate.after(#dates.createNow())} and ${topic.deadline.before(#dates.createNow())}">
+                            <span style="background-color: #ffc107"><a href="#submit-file-wrapper"
+                                     >View and Update! ▼</a></span>
                         </th:block>
-                        <th:block th:if="${item.status == -1}">
-                            <p class="text-warning">Not yet rated</p>
+                        <th:block th:if="${topic.closeDate.before(#dates.createNow())}">
+                            <span style="background-color: #007bff"><a href="#submit-file-wrapper"
+                                     >Only View! ▼</a></span>
                         </th:block>
-                    </div>
-                     </div>
-                <div class="rp-button">
-                    <div class="button">
-                        <a th:href="@{'/article/detail/'+${item.id}}">Detail</a>
-                    </div>
-
-                    <div class="button" th:if="${item.topic.closeDate.after(#dates.createNow())}">
-                        <a class="btn-danger" th:href="@{'/article/delete/'+${item.topic.code}+'/'+${item.id}}" onclick="if (!confirm('Are you sure to delete this article ?')) return false">Delete</a>
                     </div>
                 </div>
-                <div th:if="${item.comment != null && !item.comment.equals('')}">
-                    <a style="color: #7700ff" th:href="@{'/article/detail/'+${item.id}}">Feedback available</a>
+                <div class="deadline-div">
+                    <div class="col-lg-4 col-md-2 col-12"></div>
+                    <div class="col-lg-4 col-md-6 col-sm-8 col-8 deadline-content">
+                        <th:block th:if="${topic.deadline.after(#dates.createNow())}">
+                            <div class="deadline-text">
+                                <h3>Closure Date</h3>
+                            </div>
+                            <div class="deadline-time">
+                                <h3 id="days" th:text="${#dates.format(topicEntity.deadline,'dd')}"></h3>
+                                <h3>/</h3>
+                                <h3 id="hours" th:text="${#dates.format(topicEntity.deadline,'MM')}"/>
+                                <h3>/</h3>
+                                <h3 id="minutes" th:text="${#dates.format(topicEntity.deadline,'yyyy')}"/>
+                            </div>
+                        </th:block>
+                        <th:block th:if="${topic.deadline.before(#dates.createNow())}">
+                            <div class="deadline-text">
+                                <h3>Final Clousure Date</h3>
+                            </div>
+                            <div class="deadline-time">
+                                <h3 id="days" th:text="${#dates.format(topicEntity.closeDate,'dd')}"></h3>
+                                <h3>/</h3>
+                                <h3 id="hours" th:text="${#dates.format(topicEntity.closeDate,'MM')}"/>
+                                <h3>/</h3>
+                                <h3 id="minutes" th:text="${#dates.format(topicEntity.closeDate,'yyyy')}"/>
+                            </div>
+                        </th:block>
+                        <div class="deadline-time">
+                            <h5>Date</h5>
+                            <h5>Month</h5>
+                            <h5>Year</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-2 col-12"></div>
                 </div>
             </div>
         </div>
+        <div class="submit-file-wrapper" id='submit-file-wrapper'>
+            <div class="file-submission-wrapper">
+                <div class="file-submission-title">
+                    <div class="file-submission-text active">
+                        <h3>Submit New File</h3>
+                    </div>
+                    <div class="file-submission-text">
+                        <h3>File Submission</h3>
+                    </div>
+                </div>
+                <div class="file-submission-content">
+                    <th:block th:if="${topic.deadline.after(#dates.createNow())}">
+                        <div class="file-submission-form">
+                            <form th:action="@{/article/post/upload}" enctype="multipart/form-data" method="post"
+                                  th:object="${article}">
+                                <div class="cover-hidden-submit-wrapper dp-none">
+                                    <div class="hidden-submit-wrapper" id="info-form">
+                                        <div class="flex-div">
+                                            <div class="file-submission-text">
+                                                <h3>ADD YOUR ARTICLE HERE</h3>
+                                            </div>
+                                        </div>
+                                        <div class="input-title-wrapper">
+                                            <input type="text" th:field="*{title}" id="fileTitle"
+                                                   placeholder="Type Title here..."
+                                                   required>
+                                        </div>
+                                        <div class="form-upload">
+                                            <label for="fileUpload" id="fileUploadLabel">
+                                                <p>Choose a PDF file</p>
+                                            </label>
+                                            <input type="file" name="fileUpload" id="fileUpload" class="inputfile"
+                                                   accept=".pdf"
+                                                   required>
+                                        </div>
+                                        <div class="form-upload">
+                                            <label for="fileImage" id="fileImageLabel">
+                                                <p>Choose a Image</p>
+                                            </label>
+                                            <input type="file" name="fileImage" id="fileImage"
+                                                   class="inputfile img-inputfile"
+                                                   accept=".png, .jpeg, .jpg"
+                                                   required>
+                                            <div class="form-upload__preview"></div>
+                                            <input type="hidden" th:field="*{topic}">
+                                        </div>
+                                        <div class="submit-button-div">
+                                            <span id="insert-form-submit">Insert</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="submit-wrapper">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
+                            <path
+                                    d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z"/>
+                        </svg>
+                    </span>
+                                    <div class="formSubmit dp-none">
+                                        <div id="submitFileTitle"></div>
+                                        <div id="submitFileImage"></div>
+                                        <div id="submitFileUpload"></div>
+                                    </div>
+                                </div>
+                                <div class="submit-button-wrapper">
+                                    <input type="checkbox" required> I agree to our <a style="color:#dc3545">Terms of Use</a> and <a style="color: #dc3545">Privacy Policy</a>.
+                                </div>
+                                <div class="submit-button-wrapper">
+                                    <div class="submit-button-div">
+                                        <input type="submit" value="Submit">
+                                    </div>
+                                    <div class="cancel-button">
+                                        <input type="reset" value="Reset">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </th:block>
+                    <th:block th:if="${topic.deadline.before(#dates.createNow())}">
+                        <div class="file-submission-form" style="color:#ffc107">
+                            CANNOT SUBMIT ANYMORE ARTICLES BECAUSE OF CLOSURE DATE
+                        </div>
+                    </th:block>
+                    <th:block th:if="${articles.size() > 0}">
+                        <div class="rp-show-wrapper-content">
+                            <div class="rp-show-wrapper" th:each="item:${articles}">
+                                <div class="cover-hidden-submit-wrapper dp-none">
+                                    <div class="hidden-submit-wrapper info-form">
+                                        <form th:action="@{'/article/post/update'}" enctype="multipart/form-data" method="post">
+                                            <div class="flex-div">
+                                                <div class="file-submission-text">
+                                                    <h3>UPDATE YOUR ARTICLE HERE</h3>
+                                                </div>
+                                            </div>
+                                            <div class="input-title-wrapper">
+                                                <input type="text" name="title" th:value="${item.title}"
+                                                       placeholder="Type Title here..."
+                                                       required>
+                                            </div>
+                                            <div class="form-upload">
+                                                <label th:for="${item.id} + ${item.topic}">
+                                                    <p th:text="${item.name}"/>
+                                                </label>
+                                                <input type="file" name="fileEditUpload" th:id="${item.id} + ${item.topic}"
+                                                       class="inputfile"
+                                                       accept=".pdf">
+                                            </div>
+                                            <div class="form-upload">
+                                                <label th:for="${item.topic} + ${item.id}">
+                                                    <p th:text="${item.thumbnail}"/>
+                                                </label>
+                                                <input type="file" name="fileEditImage" th:id="${item.topic} + ${item.id}"
+                                                       class="inputfile img-inputfile"
+                                                       accept=".png, .jpeg, .jpg">
+                                                <div class="form-upload__preview">
+                                                    <div class="form-upload__item">
+                                                        <div class="form-upload__item-thumbnail"
+                                                             th:style="'background-image: url('+ ${item.imagePath} +');'"></div>
+                                                        <p class="form-upload__item-name" th:text="${item.thumbnail}"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
 
+                                            <div>
+                                                <input type="hidden" name="id" th:value="${item.id}">
+                                            </div>
+                                            <div class="submit-button-div">
+                                                <button type="submit" class="insert-form-submit btn btn-primary">Update</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="wrapper">
+                                    <div class="rp-img">
+                                        <img th:src="@{${item.imagePath}}" alt="">
+                                    </div>
+                                    <div class="rp-discrible-wrapper">
+                                        <div class="title">
+                                            <h1>[[${item.title}]]</h1>
+                                            <hr>
+                                        </div>
+                                        <div class="discrible">
+                                            <div class="author">
+                                                <h5>Author:</h5>
+                                                <p>[[${item.student.email}]]</p>
+                                            </div>
+                                            <div class="author">
+                                                <h5>Status:</h5>
+                                                <th:block th:if="${item.status == 1}">
+                                                    <p class="text-success">Accepted</p>
+                                                </th:block>
+                                                <th:block th:if="${item.status == 0}">
+                                                    <p class="text-danger">Disable</p>
+                                                </th:block>
+                                                <th:block th:if="${item.status == -1}">
+                                                    <p class="text-warning">Not yet rated</p>
+                                                </th:block>
+                                            </div>
+                                        </div>
+                                        <div class="rp-button">
+                                            <div class="button">
+                                                <a th:href="@{'/article/detail/'+${item.id}}">Detail</a>
+                                            </div>
 
+                                            <th:block th:if="${item.topic.closeDate.after(#dates.createNow())}">
+                                                <div class="button button-edit-article">
+                                                    <a href="" class="btn-secondary" style="background-color: #007bff">Edit</a>
+                                                </div>
+                                            </th:block>
+
+                                            <div class="button" th:if="${item.topic.closeDate.after(#dates.createNow())}">
+                                                <a class="btn-danger" style="background-color: #dc3545"
+                                                   th:href="@{'/article/delete/'+${item.topic.code}+'/'+${item.id}}"
+                                                   onclick="if (!confirm('Are you sure to delete this article ?')) return false">Delete</a>
+                                            </div>
+                                        </div>
+                                        <div th:if="${item.comment != null && !item.comment.equals('')}">
+                                            <a style="color: #7700ff" th:href="@{'/article/detail/'+${item.id}}">Feedback
+                                                available</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+                    <th:block th:if="${articles.size() <= 0}">
+                        <div class="rp-show-wrapper-content" style="color:#dc3545">
+                            YOU HAVE NOT SUBMITTED ANY ARTICLES YET.
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
     </div>
-
 </div>
 
+<div th:replace="common/footer :: footer"/>
+
+<script th:src="@{/js/validity.js}"></script>
+<script th:src="@{/js/post-article.js}"></script>
+<script>
+    $('.file-submission-text').click(function () {
+        if (!$(this).hasClass('active')) {
+            $('.file-submission-text').toggleClass('active');
+            $('.file-submission-content>div').toggle('500');
+        }
+    })
+</script>
 
 </body>
 </html>

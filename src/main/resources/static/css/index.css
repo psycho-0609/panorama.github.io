@@ -1,0 +1,8 @@
+.content-selected {
+    column-count: 3;
+}
+
+.item-selected {
+    margin-bottom: 20px;
+    display: inline-block;
+}

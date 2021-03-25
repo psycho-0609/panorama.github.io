@@ -31,6 +31,7 @@
     background-color: white;
     border-radius: 15px;
     padding: 30px;
+    box-shadow: 0px 30px 60px rgba(57,57,57,0.1);
 }
 
 .wrapper {
@@ -136,8 +137,8 @@
 .input-cmt-wrapper {
     display: flex;
     justify-content: flex-start;
+    align-items: flex-start;
 }
-
 
 .input-sizer {
     display: inline-grid;
@@ -150,44 +151,51 @@
     width: 80%;
     background-color: rgb(196, 196, 196);
     border: none;
-    border-radius: 30px;
-}
-
-.input-sizer.stacked {
-    padding: 10px 30px;
-    align-items: stretch;
-}
-
-.input-sizer.stacked::after, .input-sizer.stacked input, .input-sizer.stacked textarea {
-    grid-area: 2/1;
-}
-
-.input-sizer::after, .input-sizer textarea {
-    width: auto;
-    min-width: 1em;
-    grid-area: 0.5;
-    font: inherit;
-    padding: 0.25em;
-    margin: 0;
-    resize: none;
-    background: none;
-    appearance: none;
-    border: none;
+    border-radius: 1.25rem;
     outline: none;
+    width: 100%;
+    padding: .375rem 1.25rem;
 }
 
-.input-sizer::after {
-    content: attr(data-value) ' ';
-    visibility: hidden;
-    white-space: pre-wrap;
-}
+/*.input-sizer.stacked {*/
+/*    padding: 10px 30px;*/
+/*    align-items: stretch;*/
+/*}*/
+
+/*.input-sizer.stacked::after, .input-sizer.stacked input, .input-sizer.stacked textarea {*/
+/*    grid-area: 2/1;*/
+/*}*/
+
+/*.input-sizer::after, .input-sizer textarea {*/
+/*    width: auto;*/
+/*    min-width: 1em;*/
+/*    grid-area: 0.5;*/
+/*    font: inherit;*/
+/*    padding: 0.25em;*/
+/*    margin: 0;*/
+/*    resize: none;*/
+/*    background: none;*/
+/*    appearance: none;*/
+/*    border: none;*/
+/*    outline: none;*/
+/*}*/
+
+/*.input-sizer::after {*/
+/*    content: attr(data-value) ' ';*/
+/*    visibility: hidden;*/
+/*    white-space: pre-wrap;*/
+/*}*/
 
 .button-tele {
     display: flex;
     align-items: center;
 }
 
-
+.button-tele button {
+    border: none;
+    background-color: #fff;
+    outline: none;
+}
 
 .telegram {
     width: 32px;
@@ -229,10 +237,6 @@
     background-color: rgb(196, 196, 196);
     border-radius: 15px;
     padding: 5px 10px;
-}
-
-.footer {
-    background-color: #1DDDB4;
 }
 
 @media only screen and (max-width: 1140px) {

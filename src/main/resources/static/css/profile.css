@@ -1,0 +1,152 @@
+.container {
+    margin-top: 30px;
+    margin-bottom: 180px;
+}
+
+.rp-categories-wrapper {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.title-tp {
+    padding-left: 30px;
+}
+
+.tab-category {
+    border: none;
+    width: auto;
+}
+
+.tab-category li, .tab-category a {
+    height: 100%;
+}
+
+.categories {
+    display: flex;
+}
+
+.rp-show-wrapper {
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 30px;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.title {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.rp-img img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    display: block;
+    margin: auto;
+}
+
+.rp-discrible-wrapper {
+    padding-left: 40px;
+    width: 100%;
+}
+
+.discrible {
+    margin-top: 20px;
+}
+
+.discrible>div {
+    display: flex;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.discrible>div p:first-child {
+    font-weight: 700;
+    display: inline-block;
+    width: 200px;
+}
+
+.discrible p {
+    font-size: 20px;
+}
+
+.rp-button {
+    padding: 20px 0px;
+    display: flex;
+    position: relative;
+}
+
+.form-edit {
+    display: none;
+}
+
+button {
+    border: none;
+    outline: none;
+}
+
+button:focus {
+    outline: none;
+    border: none;
+}
+
+.button {
+    margin: 0px 10px;
+}
+
+.button:first-child {
+    margin-left: 0px;
+}
+
+.button:last-child {
+    margin-right: 0px;
+}
+
+.button a {
+    padding: 8px 16px;
+    border-radius: 10px;
+    background-color: #1DDDB4;
+}
+
+.button a:hover {
+    color: white;
+    background-color: #038f70;
+}
+
+.special {
+    position: relative;
+}
+
+.special a {
+    background-color: #dd531d;
+}
+
+.special a:hover {
+    background-color: #8f2b03;
+}
+
+@media only screen and (max-width: 1140px) {
+    .rp-categories-wrapper {
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    .wrapper {
+        display: block;
+    }
+    .rp-img {
+        text-align: center;
+    }
+    .rp-discrible-wrapper {
+        padding-left: 0px;
+    }
+    .wrapper .title {
+        text-align: center;
+    }
+}

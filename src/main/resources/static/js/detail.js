@@ -1,11 +1,16 @@
-Array.from(document.querySelectorAll('[data-expand]'), (input) => {
-    let parent = input.parentNode;
-    function updateSize() {
-        parent.dataset.value = input.value
-    }
-    input.addEventListener('input', updateSize);
-    updateSize();
-});
+var textarea = document.querySelector('textarea');
+
+textarea.addEventListener('keydown', autosize);
+
+function autosize(){
+    var el = this;
+    setTimeout(function(){
+        el.style.cssText = 'height:auto; padding: .375rem .75rem';
+        // for box-sizing other than "content-box" use:
+        // el.style.cssText = '-moz-box-sizing:content-box';
+        el.style.cssText = 'height:' + el.scrollHeight + 'px';
+    },0);
+}
 
 $('.special #make-a-grade').click(function (e) {
     e.preventDefault();
@@ -21,6 +26,7 @@ $('.grade').hover(function () {
     mouse_is_inside_grade = false;
 });
 
+mouse_is_inside_btn_grade = false;
 $('#make-a-grade').hover(function() {
     mouse_is_inside_btn_grade = true;
 }, function () {

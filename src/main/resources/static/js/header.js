@@ -20,5 +20,6 @@ $(function () {
     $('.hamburger').click(function(e) {
         e.preventDefault();
         $('.side-bar').toggle('1000');
+        $('.side-bar-content').toggle('1000');
     })
 })

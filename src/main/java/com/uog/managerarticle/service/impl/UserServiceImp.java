@@ -1,5 +1,7 @@
 package com.uog.managerarticle.service.impl;
 
+import com.uog.managerarticle.entity.StudentEntity;
+import com.uog.managerarticle.entity.User;
 import com.uog.managerarticle.repository.MarketingCoordinatorRepository;
 import com.uog.managerarticle.repository.StudentRepository;
 import com.uog.managerarticle.service.IUserService;
@@ -20,8 +22,17 @@ public class UserServiceImp implements IUserService {
     @Autowired
     private MarketingCoordinatorRepository coordinatorRepository;
 
-
-
+//    @Override
+//    public User getUserProfile(CustomUserDetail userDetail) {
+//        User user = new User();
+//
+//        if(userDetail.getPosition().equals("student")){
+//            user = studentRepository.findByEmail(userDetail.getUsername());
+//        }else if(userDetail.getPosition().equals("coordinator")){
+//            user = coordinatorRepository.findByEmail(userDetail.getUsername());
+//        }
+//        return user;
+//    }
 
     @Override
     public Object getUserProfile(CustomUserDetail userDetail) {

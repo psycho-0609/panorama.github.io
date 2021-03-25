@@ -8,13 +8,15 @@
 </head>
 <body>
 <div th:replace="common/header :: header"/>
-
+<div class="container-area">
+    <div th:replace="common/side-bar :: side-bar"></div>
 <div class="content-submit col-10">
+    <h1>Add a new Student</h1>
+    <div class="alert alert-warning" th:if="${message != null}">[[${message}]]</div>
     <form th:action="@{/student/save}" class="row" th:method="post" th:object="${student}">
         <div class="col-6">
             <div class="form-group">
                 <label for="">ID</label>
-
                 <input type="text" class="form-control" th:field="*{id}">
                 <p class="error" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></p>
             </div>
@@ -54,10 +56,10 @@
             <input type="text" class="form-control" th:field="*{address}">
             <p class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
         </div>
-        <input type="submit" class="btn btn-primary" value="Submit">
+        <input type="submit" class="btn btn-primary col-3" value="Submit">
     </form>
 </div>
-
+</div>
 <div th:replace="common/footer :: footer"/>
 <script th:src="@{/js/adduser.js}"></script>
 </body>

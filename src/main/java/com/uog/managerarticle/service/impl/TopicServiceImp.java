@@ -1,6 +1,7 @@
 package com.uog.managerarticle.service.impl;
 
 import com.uog.managerarticle.dto.TopicDtoReport;
+import com.uog.managerarticle.entity.StudentEntity;
 import com.uog.managerarticle.entity.TopicEntity;
 import com.uog.managerarticle.repository.ArticleRepository;
 import com.uog.managerarticle.repository.TopicRepository;
@@ -76,5 +77,14 @@ public class TopicServiceImp implements ITopicService {
             throw new Exception("Not Found Topic");
         }
         topicRepository.delete(entity.get());
+    }
+
+    @Override
+    public void update(TopicEntity topic) throws Exception {
+        Optional<TopicEntity> entity = topicRepository.findById(topic.getId());
+        if (!entity.isPresent()) {
+            throw new Exception("Not Found");
+        }
+        topicRepository.save(topic);
     }
 }

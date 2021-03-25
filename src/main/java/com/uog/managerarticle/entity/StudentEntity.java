@@ -18,13 +18,12 @@ public class StudentEntity {
     @NotNull(message = "Please input ID")
     private String id;
 
-    @Column(name = "name",nullable = false)
-    @NotNull(message = "Please input Name")
+    @Column(name = "name", nullable = false)
+    @NotNull(message = "Please input Name Student")
     private String name;
 
-
     @Column(name = "email", unique = true, nullable = false)
-    @Email(message = "email invalid")
+    @Email(message = "Email invalid")
     @NotNull(message = "Please input email")
     private String email;
 
@@ -32,7 +31,7 @@ public class StudentEntity {
     @JoinColumn(name = "account_id")
     private AccountEntity accountEntity;
 
-    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private Set<ArticleEntity> articles;
 
     @NotNull(message = "Please input phone")

@@ -1,4 +1,6 @@
-.half-triagle{
+.footer-container::before {
+    position: absolute;
+    content: "";
     border: solid transparent;
     content: "";
     height: 0px;
@@ -7,18 +9,22 @@
     border-right-width: 0px;
     border-bottom-width: 0px;
     border-left-width: 100vw;
-    border-left-color: #01011F;
+    border-left-color: #343a40;
+    top: -79px;
+    overflowY: hidden;
 }
+
 .footer{
     background-color: white;
     width: 100%;
     position: relative;
     bottom: 0px;
-    z-index: -1;
-    padding-top: 80px;
+    z-index: 150;
 }
+
 .footer-container{
-    background-color: #01011F;
+    position: relative;
+    background-color: #343a40;
     color: white;
     display: flex;
     justify-content: center;

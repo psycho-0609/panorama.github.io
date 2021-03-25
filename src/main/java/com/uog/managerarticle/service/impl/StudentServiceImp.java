@@ -2,6 +2,7 @@ package com.uog.managerarticle.service.impl;
 
 import com.uog.managerarticle.entity.AccountEntity;
 import com.uog.managerarticle.entity.StudentEntity;
+import com.uog.managerarticle.repository.AccountRepository;
 import com.uog.managerarticle.repository.StudentRepository;
 import com.uog.managerarticle.service.IRoleService;
 import com.uog.managerarticle.service.IStudentService;
@@ -24,16 +25,23 @@ public class StudentServiceImp implements IStudentService {
     @Autowired
     private IRoleService roleService;
 
+    @Autowired
+    private AccountRepository accountRepository;
+
     @Override
     public StudentEntity findByEmail(String email) {
         return studentRepository.findByEmail(email);
+    }
+
+    public AccountEntity findAcountByEmail(String email) {
+        return accountRepository.findAccountEntityByUserName(email);
     }
 
     @Override
     public StudentEntity save(StudentEntity studentEntity) {
         AccountEntity accountEntity = new AccountEntity();
         accountEntity.setUserName(studentEntity.getEmail());
-        accountEntity.setPassword(encoder.encode("123456879"));
+        accountEntity.setPassword(encoder.encode("123456789"));
         accountEntity.setRoles(Arrays.asList(roleService.finByName("STUDENT")));
         accountEntity.setPosition("student");
         studentEntity.setAccountEntity(accountEntity);
@@ -43,7 +51,7 @@ public class StudentServiceImp implements IStudentService {
     @Override
     public StudentEntity update(StudentEntity studentEntity) throws Exception {
         Optional<StudentEntity> entity = studentRepository.findById(studentEntity.getId());
-        if(!entity.isPresent()){
+        if (!entity.isPresent()) {
             throw new Exception("Not Found");
         }
         StudentEntity oldEntity = entity.get();
@@ -56,7 +64,7 @@ public class StudentServiceImp implements IStudentService {
     @Override
     public StudentEntity findById(String id) throws Exception {
         Optional<StudentEntity> studentEntity = studentRepository.findById(id);
-        if(!studentEntity.isPresent()){
+        if (!studentEntity.isPresent()) {
             throw new Exception("Not Found Student");
         }
         return studentEntity.get();
@@ -70,8 +78,8 @@ public class StudentServiceImp implements IStudentService {
     @Override
     public void delete(String id) throws Exception {
         Optional<StudentEntity> entity = studentRepository.findById(id);
-        if(!entity.isPresent()){
-            throw  new Exception("Not Found Student");
+        if (!entity.isPresent()) {
+            throw new Exception("Not Found Student");
         }
         studentRepository.delete(entity.get());
     }

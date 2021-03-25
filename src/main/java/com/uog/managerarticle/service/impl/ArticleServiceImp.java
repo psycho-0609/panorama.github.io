@@ -40,8 +40,7 @@ public class ArticleServiceImp implements IArticleService {
 
     @Override
     @Transactional(rollbackFor = IOException.class)
-    public ArticleEntity save(ArticleEntity entity, MultipartFile fileUpload, MultipartFile imageUpload)
-            throws IOException {
+    public ArticleEntity save(ArticleEntity entity, MultipartFile fileUpload, MultipartFile imageUpload) throws IOException {
         CustomUserDetail userDetail = UserInfor.getPrincipal();
         StudentEntity student = studentRepository.findByEmail(userDetail.getUsername());
         String nameArticle = StringUtils.cleanPath(fileUpload.getOriginalFilename());
@@ -72,6 +71,9 @@ public class ArticleServiceImp implements IArticleService {
         String dir = "./file-article/"+oldArticle.getId();
         entity.setStatus(oldArticle.getStatus());
         entity.setStudent(oldArticle.getStudent());
+        entity.setTopic(oldArticle.getTopic());
+        entity.setStatus(-1);
+        entity.setComment(null);
         entity.setCreatedDate(new Date());
 
         if(fileUpload.getOriginalFilename().equals("")){
@@ -113,9 +115,9 @@ public class ArticleServiceImp implements IArticleService {
         Date now = new Date();
         for(ArticleEntity entity:articleRepository.findAllByCommentAndStudentFacultyId(null,id)){
             calendar.setTime(entity.getCreatedDate());
-            calendar.add(GregorianCalendar.DATE,2);
+            calendar.add(GregorianCalendar.DATE,14);
             Date date = df.parse(df.format(calendar.getTime()));
-            if(date.before(now)){
+            if(!date.before(now)){
                 entities.add(entity);
             }
         }
@@ -189,6 +191,11 @@ public class ArticleServiceImp implements IArticleService {
     @Override
     public List<ArticleEntity> findAllByStudentIdAndTopicCode(String id, String code) {
        return articleRepository.findAllByStudentIdAndTopicCode(id,code);
+    }
+
+    @Override
+    public List<ArticleEntity> findAllByStudentIdAndStatus(String id, Integer status) {
+        return articleRepository.findAllByStudentIdAndStatus(id,status);
     }
 
     @Override

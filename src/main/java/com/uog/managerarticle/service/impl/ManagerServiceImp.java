@@ -1,6 +1,7 @@
 package com.uog.managerarticle.service.impl;
 
 import com.uog.managerarticle.entity.AccountEntity;
+import com.uog.managerarticle.entity.MarketingCoordinatorEntity;
 import com.uog.managerarticle.entity.MarketingManagerEntity;
 import com.uog.managerarticle.repository.MarketingManagerRepository;
 import com.uog.managerarticle.service.IManagerService;
@@ -44,6 +45,15 @@ public class ManagerServiceImp implements IManagerService {
         MarketingManagerEntity oldManager = oldEntity.get();
         oldManager.getAccountEntity().setUserName(entity.getEmail());
         return managerRepository.save(entity);
+    }
+
+    @Override
+    public void delete(String id) throws Exception {
+        Optional<MarketingManagerEntity> entity = managerRepository.findById(id);
+        if(!entity.isPresent()){
+            throw new Exception("Not Found Coordinator");
+        }
+        managerRepository.delete(entity.get());
     }
 
     @Override

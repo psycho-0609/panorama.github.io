@@ -3,9 +3,11 @@ package com.uog.managerarticle.controller;
 import com.uog.managerarticle.entity.FacultyEntity;
 import com.uog.managerarticle.service.IFacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -13,8 +15,13 @@ import javax.validation.Valid;
 import java.text.ParseException;
 
 @Controller
-@RequestMapping("faculty")
+@RequestMapping("/faculty")
 public class FacultyController {
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+    }
 
     @Autowired
     private IFacultyService facultyService;
@@ -53,20 +60,22 @@ public class FacultyController {
     }
 
     @PostMapping("/add")
-    public String save(@Valid @ModelAttribute("faculty") FacultyEntity facultyEntity, BindingResult bindingResult, RedirectAttributes ra){
+    public String save(@Valid @ModelAttribute("faculty") FacultyEntity facultyEntity, BindingResult bindingResult, RedirectAttributes ra, Model model){
         if(bindingResult.hasErrors()){
             return "/faculty/add";
         }
+
         try {
             facultyService.findById(facultyEntity.getId());
-            ra.addFlashAttribute("message","Faculty existed");
+            model.addAttribute("message", "Faculty ID existed");
+            return "/faculty/add";
 
         }catch (Exception e){
             FacultyEntity facultySaved = facultyService.save(facultyEntity);
             ra.addFlashAttribute("message","Add faculty successfully");
         }
-        return "redirect:list";
 
+        return "redirect:/faculty/list";
     }
 
     @PostMapping("/update")
@@ -75,15 +84,15 @@ public class FacultyController {
             return "faculty/update";
         }
         facultyService.update(facultyEntity);
-        return "redirect:list";
+        return "redirect:/faculty/list";
 
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") String id, RedirectAttributes ra) throws Exception {
+    public String deleteFaculty(@PathVariable("id") String id, RedirectAttributes ra) throws Exception {
         facultyService.delete(id);
-        ra.addFlashAttribute("Delete Successfully");
-        return "redirect:list";
+        ra.addFlashAttribute("message","Delete Successfully");
+        return "redirect:/faculty/list";
     }
 
 }

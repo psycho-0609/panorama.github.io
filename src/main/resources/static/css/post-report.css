@@ -1,33 +1,32 @@
-body {
-    background-color: #fff;
-}
-
-/* display:flex */
 .header-wrap {
     position: relative;
+    margin-top: -30px;
+    margin-bottom: 160px;
 }
 
-.submit-wrapper,.header-bar, .header-bar-button, .img-acc, .account{
+.submit-wrapper, .header-bar, .header-bar-button, .img-acc, .account {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.header, .header-color{
+.header-area, .header-color {
     border-radius: 100% / 50%;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-
 }
-.header{
-    background-color: #01011fab;
-    position: absolute;
+
+.header-area {
+    background:linear-gradient(rgba(1,1,31,0.67), rgba(1,1,31,0.67)), url("https://www.click2houston.com/resizer/iDwVVd3hXTT53KUwAYxv2cOSuqo=/1600x1143/smart/filters:format(jpeg):strip_exif(true):strip_icc(true):no_upscale(true):quality(65)/cloudfront-us-east-1.images.arcpublishing.com/gmg/TGIVLLC3MBCLNBPNGQOWZB4UGQ.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     left: 0px;
     top: 0px;
-    width: 100%;
     height: 100%;
 }
-.header-color{
+
+.header-color {
     background-image: url("https://www.click2houston.com/resizer/iDwVVd3hXTT53KUwAYxv2cOSuqo=/1600x1143/smart/filters:format(jpeg):strip_exif(true):strip_icc(true):no_upscale(true):quality(65)/cloudfront-us-east-1.images.arcpublishing.com/gmg/TGIVLLC3MBCLNBPNGQOWZB4UGQ.jpg");
     background-size: cover;
     background-position: center;
@@ -36,28 +35,32 @@ body {
     content: "";
 }
 
-.content-header{
+.content-header {
     padding-left: 50px;
 }
-.first-content{
+
+.first-content {
     margin-bottom: 30px;
 }
-.first-content h1,.first-content p{
+
+.first-content h1, .first-content p {
     font-style: normal;
     font-weight: bold;
-    margin:30px 0 0 0;
+    margin: 30px 0 0 0;
 }
-.first-content h1{
 
+.first-content h1 {
     font-size: 72px;
     line-height: 84px;
     color: #1DDDB4;
 }
-.first-content p{
+
+.first-content p {
     font-size: 36px;
     line-height: 42px;
     color: #FFFFFF;
 }
+
 .submit-button span {
     padding: 8px 10px;
     display: inline-block;
@@ -68,56 +71,63 @@ body {
     color: white;
 }
 
-.deadline-div{
+.deadline-div {
     display: flex;
     margin-top: 150px;
     justify-content: center;
     align-items: center;
     color: white;
 }
-.deadline-content{
+
+.deadline-content {
     border: 1px solid black;
     background-color: white;
-    color:black;
-    border-radius:10px;
+    color: black;
+    border-radius: 10px;
     box-shadow: 0 0 6px 0 black;
 }
-.deadline-text h3{
+
+.deadline-text h3 {
     margin: 0;
     text-align: center;
 }
-.deadline-time h3{
+
+.deadline-time h3 {
     width: 50px;
 }
-.deadline-time h5{
+
+.deadline-time h5 {
     width: 100px;
 }
-.deadline-time{
+
+.deadline-time {
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
 }
-.hide{
-    width: 100%;
+
+.hide {
     text-align: center;
     background-color: rgba(129, 129, 129, 0.301);
 }
-.text-addrp{
-    width: 100%;
+
+.text-addrp {
 }
-.input-title{
-    width: 100%;
+
+.input-title {
 }
-.select-rp-button{
+
+.select-rp-button {
     display: inline-block;
 }
 
-p{
+p {
     margin: 0px;
 }
-.triagle {
-    background-color: white;
+
+.header-wrap::after {
+    content: "";
     border: solid transparent;
     content: "";
     height: 0px;
@@ -127,46 +137,57 @@ p{
     border-bottom-width: 80px;
     border-left-width: 100vw;
     border-left-color: #1DDDB4;
+    bottom: -160px;
+    right: 0px;
+    position: absolute;
+    z-index: -1;
 }
 
 .submit-file-wrapper {
-    background-color: white;
     padding: 30px 50px;
+    margin-bottom: 130px;
+}
+
+.file-submission-title {
+    display: flex;
 }
 
 .file-submission-text {
     position: relative;
     display: inline-block;
     margin-bottom: 20px;
+    margin-right: 20px;
 }
 
-.flex-div, .input-title-wrapper{
+.flex-div, .input-title-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.input-title-wrapper{
+.input-title-wrapper {
     display: flex;
     justify-content: center;
 }
-.input-title-wrapper input{
+
+.input-title-wrapper input {
     width: 80%;
     font-size: 18px;
 }
 
-
-.button-hide label:active, .form-upload label:active{
+.button-hide label:active, .form-upload label:active {
     border-radius: 15px;
-    border:1px solid #1DDDB4;
+    border: 1px solid #1DDDB4;
     box-shadow: 0 0 4px 2px #19ac8c;
 }
-.button-hide label, .form-upload label{
+
+.button-hide label, .form-upload label {
     margin: 0px;
     padding: 8px 8px;
     cursor: pointer;
 }
-.button-hide,.form-upload label{
+
+.button-hide, .form-upload label {
     background-color: #1DDDB4;
     display: inline-block;
     margin: 5%;
@@ -180,7 +201,7 @@ p{
     cursor: pointer;
 }
 
-.file-submission-text h3::after {
+.file-submission-text.active h3::after {
     content: "";
     width: 100%;
     height: 2px;
@@ -199,11 +220,14 @@ p{
 }
 
 .submit-wrapper {
+    background-color: white;
     border: 3px solid #B2B2B2;
     border-radius: 0 30px 0 30px;
     padding: 15px;
     margin-bottom: 20px;
 }
+
+
 
 .inputFile {
     width: 0.1px;
@@ -228,7 +252,9 @@ span svg {
     height: 100%;
 }
 
-
+.rp-show-wrapper-content {
+    display: none;
+}
 
 .cover-hidden-submit-wrapper {
     height: 100vh;
@@ -237,6 +263,7 @@ span svg {
     top: 0;
     left: 0;
     background-color: rgba(56, 56, 56, 0.815);
+    z-index: 200;
 }
 
 .hidden-submit-wrapper {
@@ -250,6 +277,7 @@ span svg {
     box-shadow: 0px 0px 15px #1DDDB4;
     border-radius: 15px;
     padding: 30px 0px;
+    z-index: 210;
 }
 
 .hidden-submit-wrapper input[type=text] {
@@ -269,7 +297,6 @@ span svg {
     z-index: -1;
 }
 
-
 .inputfile+label {
     font-size: 1.25em;
     font-weight: 700;
@@ -282,6 +309,7 @@ span svg {
 .inputfile:focus+label, .inputfile+label:hover {
     background-color: red;
 }
+
 .form-upload__preview {
     display: flex;
     flex-wrap: wrap;
@@ -344,7 +372,7 @@ span svg {
     padding-left: 20px;
 }
 
-.submit-button-div{
+.submit-button-div {
     margin-top: 10px;
     display: flex;
     justify-content: center;
@@ -377,79 +405,193 @@ span svg {
 .dp-none {
     display: none;
 }
-.text-addrp h1{
 
-    margin:0px;
-
+.text-addrp h1 {
+    margin: 0px;
 }
-.text-addrp hr{
+
+.text-addrp hr {
     margin-top: 0px;
     border-top: 2px solid black;
 }
-#submitFileTitle{
+
+#submitFileTitle {
     text-align: center;
     font-size: 32px;
     font-weight: bold
 }
-#submitFileUpload{
+
+#submitFileUpload {
     text-align: center;
     font-size: 25px;
 }
-#submitFileImage{
+
+#submitFileImage {
     display: flex;
     justify-content: center;
 }
-@media only screen and (max-width:	1140px){
-    .button-hide,.form-upload,.submit-button-div,.input-title-wrapper input,.cancel-button{
+
+@media only screen and (max-width:1200px) {
+    .content-header {
+        padding-left: 45px;
+    }
+    .header, .header-color {
+        height: 500px;
+    }
+    .deadline-div {
+        margin-top: 180px;
+    }
+    .first-content h1 {
+        font-size: 60px;
+        line-height: 72px;
+    }
+    .first-content p {
+        font-size: 25px;
+        line-height: 31px;
+    }
+}
+
+@media only screen and (max-width: 1140px) {
+    .button-hide, .form-upload, .submit-button-div, .input-title-wrapper input, .cancel-button {
         font-size: 15px;
     }
-    .triagle{
+
+    .header-wrap {
+        margin-bottom: 120px;
+    }
+
+    .header-wrap::after {
         border-top-width: 60px;
         border-bottom-width: 60px;
     }
+
     .file-submission-text h3 {
         font-size: 20px;
     }
-    .half-triagle {
-        border-top-width: 60px;
+}
+
+@media only screen and (max-width:990px) {
+    .content-header {
+        padding-left: 45px;
+    }
+    .first-content h1 {
+        font-size: 50px;
+        line-height: 62px;
+    }
+    .first-content p {
+        font-size: 25px;
+        line-height: 31px;
     }
 }
 
 @media only screen and (max-width: 960px) {
-    .triagle {
+    .header-wrap {
+        margin-bottom: 80px;
+    }
+
+    .header-wrap::after {
         border-top-width: 40px;
         border-bottom-width: 40px;
     }
+
     .file-submission-text h3::after {
         height: 1px;
     }
-    .half-triagle {
-        border-top-width: 40px;
+}
+
+@media only screen and (max-width:840px) {
+    .content-header {
+        padding-left: 40px;
+    }
+    .header, .header-color {
+        height: 400px;
+    }
+    .deadline-div {
+        margin-top: 120px;
+    }
+    .first-content h1 {
+        font-size: 40px;
+        line-height: 52px;
+    }
+    .first-content p {
+        font-size: 20px;
+        line-height: 21px;
+    }
+    .deadline-text h3, .deadline-time h3 {
+        font-size: 20px;
+    }
+    .deadline-time h5 {
+        font-size: 15px;
     }
 }
 
 @media only screen and (max-width: 720px) {
-    .triagle {
+    .header-wrap {
+        margin-bottom: 60px;
+    }
+
+    .header-wrap::after {
         border-top-width: 30px;
         border-bottom-width: 30px;
     }
+
     .file-submission-text h3 {
         font-size: 15px;
     }
-    .half-triagle {
-        border-top-width: 30px;
+}
+
+@media only screen and (max-width:684px) {
+    .content-header {
+        padding-left: 40px;
+    }
+    .first-content h1 {
+        font-size: 30px;
+        line-height: 42px;
+    }
+    .first-content p {
+        font-size: 15px;
+        line-height: 16px;
+    }
+    .deadline-div {
+        margin-top: 120px;
+    }
+    .submit-button {
+        padding: 6px 8px;
+        border-radius: 8px;
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-width:550px) {
+    .content-header {
+        padding-left: 35px;
+    }
+    .header, .header-color {
+        height: 350px;
+    }
+    .first-content h1 {
+        font-size: 20px;
+        line-height: 32px;
+    }
+    .first-content p {
+        font-size: 10px;
+        line-height: 11px;
+    }
+    .deadline-div {
+        margin-top: 100px;
+    }
+    .submit-button {
+        padding: 6px 8px;
+        border-radius: 8px;
+        font-size: 10px;
     }
 }
 
 @media only screen and (max-width: 540px) {
-    .triagle {
-        border-top-width: 30px;
-        border-bottom-width: 30px;
-    }
     .file-submission-text h3 {
         font-size: 12px;
     }
-    .button-hide,.input-title-wrapper,.form-upload,.submit-button-div,.cancel-button{
+    .button-hide, .input-title-wrapper, .form-upload, .submit-button-div, .cancel-button {
         font-size: 10px;
     }
 }

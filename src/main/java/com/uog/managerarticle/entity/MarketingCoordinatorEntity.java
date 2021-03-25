@@ -12,6 +12,7 @@ import java.util.Date;
 public class MarketingCoordinatorEntity {
     @Id
     @Column(name = "id")
+    @NotNull(message =  "Please input ID")
     private String id;
 
     @NotNull(message = "Please input name")

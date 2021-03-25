@@ -12,4 +12,6 @@ public interface IGuestService {
     GuestEntity save(GuestEntity entity);
     GuestEntity findByUserName(String username);
     void delete(String id) throws Exception;
+
+    GuestEntity findByEmail(String email);
 }

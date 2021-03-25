@@ -10,6 +10,8 @@
 <body>
 
     <div th:replace="common/header :: header"/>
+    <div class="container-area">
+        <div th:replace="common/side-bar :: side-bar"></div>
     <div class="container">
         <th:block sec:authorize="hasAuthority('ADMIN')">
             <a th:href="@{/topic/edit}" class="btn btn-primary">Add topic</a>
@@ -20,13 +22,13 @@
             <div class="rp-discrible-wrapper">
                 <div class="title">
                     <th:block sec:authorize="hasAuthority('COORDINATOR')">
-                        <h3><a th:href="@{'/article/manager/'+${item.code}}">[[${item.name}]]</a></h3>
+                        <h3><a th:href="@{'/article/manager/'+${item.code}}">[[${item.name}]] - [[${item.code}]]</a></h3>
                     </th:block>
                     <th:block sec:authorize="hasAuthority('STUDENT')">
-                        <h3><a th:href="@{'/article/post/'+${item.code}}">[[${item.name}]]</a></h3>
+                        <h3><a th:href="@{'/article/post/'+${item.code}}">[[${item.name}]] - [[${item.code}]]</a></h3>
                     </th:block>
                     <th:block sec:authorize="hasAuthority('ADMIN')">
-                        <h3>[[${item.name}]]</h3>
+                        <h3>[[${item.name}]] - [[${item.code}]]</h3>
                         <a th:href="@{'/topic/edit?id='+${item.id}}">Edit</a>
                         <a th:href="@{'/topic/delete/'+${item.id}}" onclick="if(!confirm('Are you sure to delete this topic. It will delete all article of this topic'))return false">Delete</a>
                     </th:block>
@@ -48,6 +50,7 @@
 
             </div>
         </div>
+    </div>
     </div>
     <div th:replace="common/footer :: footer"/>
 </body>

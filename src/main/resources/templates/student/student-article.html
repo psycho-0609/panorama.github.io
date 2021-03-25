@@ -5,43 +5,144 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <div th:replace="common/link :: header-css"/>
+    <link rel="stylesheet" th:href="@{/css/management-report.css}">
+
 </head>
 <body>
-    <div th:replace="common/header :: header"/>
-
+<div th:replace="common/header :: header"/>
+<div class="container-area">
+    <div th:replace="common/side-bar :: side-bar"/>
     <th:block th:if="${student != null}">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <table class="table">
-                        <tr th:each="item: ${articles}">
-                            <td>[[${item.title}]]</td>
-                            <td style="width: 100px;">
-                                <img style="width: 100%" th:src="${item.imagePath}" alt="">
-                                <a th:href="@{'/article/download?id='+${item.id}}">[[${item.name}]]</a>
-                            </td>
-                            <td th:text="${item.topic.name}"></td>
-
-                            <td>
-                                <th:block th:if="${item.status == true}">
-                                   Active
-                                </th:block>
-                                <th:block th:if="${item.status == false}">
-                                    Disable
-                                </th:block>
-                            </td>
-                            <td> <a th:href="@{'/article/detail/'+${item.id}}" class="btn btn-warning">Detail</a></td>
-                        </tr>
-                    </table>
+        <div class="container-page">
+            <div class="container">
+                <div class="rp-categories-wrapper" role="tablist">
+                    <ul class="nav nav-tabs tab-category" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#new-article" role="tab"
+                               aria-controls="home" aria-selected="true" style="color: #495057">NEW ARTICLE</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#disable-article" role="tab"
+                               aria-controls="profile" aria-selected="false" style="color: #495057">REJECTED</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#active-article" role="tab"
+                               aria-controls="contact" aria-selected="false" style="color: #495057">SELECTED</a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="col-md-4">
-                    <p>Student Id: [[${student.id}]]</p>
-                    <p>Name: [[${student.name}]]</p>
-                    <p>Email: [[${student.email}]]</p>
-                    <p >Article have submitted: [[${articles.size()}]]</p>
-                    <p>Active: [[${numberArticleActive}]]</p>
-                    <p>Disable: [[${numberArticleDisable}]]</p>
 
+
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="new-article" role="tabpanel" aria-labelledby="pills-new-tab">
+                        <th:block th:if="${articlesNew.size() > 0}">
+                            <p class="message-count-articles" th:text="'You have ' + ${articlesNew.size()} + ' New Articles.'"></p>
+                            <div class="rp-show-wrapper" th:each="item:${articlesNew}">
+                                <div class="wrapper">
+                                    <div class="rp-img">
+                                        <img th:src="@{${item.imagePath}}" alt="">
+                                    </div>
+                                    <div class="rp-discrible-wrapper">
+                                        <div class="title">
+                                            <h1>[[${item.title}]]</h1>
+                                            <hr>
+                                        </div>
+                                        <div class="discrible">
+                                            <div class="author">
+                                                <h5>Topic:</h5>
+                                                <p th:text="${item.topic.name}"></p>
+                                            </div>
+                                            <div class="author">
+                                                <h5 >Status:</h5>
+                                                <p class="text-warning status">Not yet rated</p>
+                                            </div>
+                                        </div>
+                                        <div class="rp-button">
+                                            <div class="button">
+                                                <a th:href="@{'/article/detail/'+${item.id}}">Detail</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
+                        <th:block th:if="${articlesNew.size() <= 0}">
+                            <p class="message-count-articles red-message">Oops, You don't have any new Articles</p>
+                        </th:block>
+                    </div>
+                    <div class="tab-pane fade" id="disable-article" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <th:block th:if="${articlesDisable.size() > 0}">
+                            <p class="message-count-articles">Unfortunately, You have [[${numberArticleDisable}]] Rejected Articles</p>
+                            <div class="rp-show-wrapper" th:each="item:${articlesDisable}">
+                                <div class="wrapper">
+                                    <div class="rp-img">
+                                        <img th:src="@{${item.imagePath}}" alt="">
+                                    </div>
+                                    <div class="rp-discrible-wrapper">
+                                        <div class="title">
+                                            <h1>[[${item.title}]]</h1>
+                                            <hr>
+                                        </div>
+                                        <div class="discrible">
+                                            <div class="author">
+                                                <h5>Topic:</h5>
+                                                <p th:text="${item.topic.name}"></p>
+                                            </div>
+                                            <div class="author">
+                                                <h5 >Status:</h5>
+                                                <p class="text-danger status">Rejected</p>
+                                            </div>
+                                        </div>
+                                        <div class="rp-button">
+                                            <div class="button">
+                                                <a th:href="@{'/article/detail/'+${item.id}}">Detail</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
+                        <th:block th:if="${articlesDisable.size() <= 0}">
+                            <p class="message-count-articles red-message">Opps, You don't have any Rejected Articles</p>
+                        </th:block>
+                    </div>
+                    <div class="tab-pane fade" id="active-article" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <th:block th:if="${articlesActive.size() > 0}">
+                            <p class="message-count-articles">Congratulations, You have [[${numberArticleActive}]] Selected Articles</p>
+                            <div class="rp-show-wrapper" th:each="item:${articlesActive}">
+                                <div class="wrapper">
+                                    <div class="rp-img">
+                                        <img th:src="@{${item.imagePath}}" alt="">
+                                    </div>
+                                    <div class="rp-discrible-wrapper">
+                                        <div class="title">
+                                            <h1>[[${item.title}]]</h1>
+                                            <hr>
+                                        </div>
+                                        <div class="discrible">
+                                            <div class="author">
+                                                <h5>Topic:</h5>
+                                                <p th:text="${item.topic.name}"></p>
+                                            </div>
+                                            <div class="author">
+                                                <h5>Status:</h5>
+                                                <p class="text-sucess status">Selected</p>
+                                            </div>
+                                        </div>
+                                        <div class="rp-button">
+                                            <div class="button">
+                                                <a th:href="@{'/article/detail/'+${item.id}}">Detail</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
+                        <th:block th:if="${articlesActive.size() <= 0}">
+                            <p class="message-count-articles red-message">Opps, You don't have any Selected Articles</p>
+                        </th:block>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,8 +151,9 @@
     <th:block th:if="${student == null}">
         <h6>[[${messageError}]]</h6>
     </th:block>
+</div>
 
 
-    <div th:replace="common/footer :: footer"/>
+<div th:replace="common/footer :: footer"/>
 </body>
 </html>

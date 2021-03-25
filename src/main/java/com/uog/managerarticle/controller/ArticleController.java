@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -28,7 +29,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("article")
+@RequestMapping("/article")
 public class ArticleController {
 
     @Autowired
@@ -55,32 +56,85 @@ public class ArticleController {
         return "/index";
     }
 
-    @GetMapping("/post/{code}/edit")
-    public String editArticle(@PathVariable("code") String topicCode, Model model, RedirectAttributes ra) throws Exception {
+//    @GetMapping("/post/{code}/edit")
+//    public String editArticle(@PathVariable("code") String topicCode, Model model, RedirectAttributes ra) throws Exception {
+//        TopicEntity topicEntity = topicService.findByCode(topicCode);
+//        Date now = new Date();
+//        if(now.after(topicEntity.getDeadline())){
+//            ra.addFlashAttribute("message","Deadline has passed so you can not submit article");
+//            return "redirect:/article/post/"+topicCode;
+//        }
+//        ArticleEntity article = new ArticleEntity();
+//        article.setTopic(topicEntity);
+//        model.addAttribute("topicEntity", topicEntity);
+//        model.addAttribute("article", article);
+//        return "article-student-post";
+//    }
+
+    @GetMapping("/post/{code}")
+    public String showPostOfStudentByTopic(@PathVariable("code") String topicCode, Model model) throws Exception {
+        CustomUserDetail userDetail = UserInfor.getPrincipal();
+        StudentEntity student = studentService.findByEmail(userDetail.getUsername());
+        if (student != null) {
+            model.addAttribute("articles", articleService.findAllByStudentIdAndTopicCode(student.getId(), topicCode));
+            model.addAttribute("topic", topicService.findByCode(topicCode));
+        }else{
+            throw new Exception("Not Found");
+        }
+
         TopicEntity topicEntity = topicService.findByCode(topicCode);
         Date now = new Date();
-        if (now.after(topicEntity.getDeadline())) {
-            ra.addFlashAttribute("message", "Deadline has passed so you can not submit article");
-            return "redirect:/article/post/" + topicCode;
-        }
         ArticleEntity article = new ArticleEntity();
         article.setTopic(topicEntity);
         model.addAttribute("topicEntity", topicEntity);
         model.addAttribute("article", article);
-        return "/article/edit";
+
+        return "article/article-student-post";
+    }
+
+    @GetMapping("/manager/{code}")
+    public String managerArticle(@PathVariable("code") String topicCode, Model model) throws Exception {
+        CustomUserDetail entity = UserInfor.getPrincipal();
+        if (entity != null && entity.getPosition().equals("coordinator")) {
+            MarketingCoordinatorEntity coordinator = coordinatorService.findByEmail(entity.getUsername());
+            model.addAttribute("articlesActive", articleService.findByFacultyAndTopicAndStatus(coordinator.getFaculty().getCode(), topicCode, 1));
+            model.addAttribute("articlesEnable", articleService.findByFacultyAndTopicAndStatus(coordinator.getFaculty().getCode(), topicCode, 0));
+            model.addAttribute("newArticle", articleService.findByFacultyAndTopicAndStatus(coordinator.getFaculty().getCode(), topicCode, -1));
+            model.addAttribute("topic", topicService.findByCode(topicCode));
+            return "article/article-manager";
+        } else {
+            throw new Exception("Not Found");
+        }
     }
 
     @GetMapping("/post/{code}/edit/{id}")
     public String updateArticle(@PathVariable("code") String topicCode, @PathVariable("id") Long id, Model model, RedirectAttributes ra) throws Exception {
         ArticleEntity article = articleService.findById(id);
         Date now = new Date();
-//        if (now.before(article.getTopic().getCloseDate())) {
-//            ra.addFlashAttribute("message", "Closure date has passed so you can not submit article");
-//            return "redirect:/article/post/" + topicCode;
-//        }
+        if(now.before(article.getTopic().getCloseDate())){
+            ra.addFlashAttribute("message","Closure date has passed so you can not submit article");
+            return "redirect:/article/post/"+topicCode;
+        }
         model.addAttribute("article", article);
         return "/article/update";
+    }
 
+
+    @PostMapping("/post/update")
+    public String Update(HttpServletRequest request, @RequestParam("fileEditUpload") MultipartFile fileUpload,
+                         @RequestParam("fileEditImage") MultipartFile fileImage) throws Exception {
+        String id = request.getParameter("id");
+        String title = request.getParameter("title");
+        ArticleEntity entity = new ArticleEntity();
+        entity.setId(Long.parseLong(id));
+        entity.setTitle(title);
+        entity = articleService.update(entity, fileUpload, fileImage);
+        String message = "<p>Student " + entity.getStudent().getEmail() + " have updated a new article on topic " + entity.getTopic().getName() + "</p>";
+        List<MarketingCoordinatorEntity> coordinators = coordinatorService.findByFacultyId(entity.getStudent().getFaculty().getId());
+        for (MarketingCoordinatorEntity coordinatorEntity:coordinators){
+            emailUntil.sendEmailNotification(coordinatorEntity.getEmail(), message);
+        }
+        return "redirect:/article/post/" + entity.getTopic().getCode();
     }
 
 
@@ -89,47 +143,27 @@ public class ArticleController {
                        @Param("fileUpload") MultipartFile fileUpload,
                        @Param("fileImage") MultipartFile fileImage,
                         RedirectAttributes ra, Model model) throws Exception {
-//        if (bindingResult.hasErrors()) {
-//            return "/article/edit";
-//        }
+
         try {
-            if(article.getId()==null){
-
-
-            ArticleEntity articleSaved = articleService.save(article, fileUpload, fileImage);
-            String message = "<p>Student " + articleSaved.getStudent().getEmail() + " have submitted a new article on topic " + articleSaved.getTopic().getName() + "</p>";
-            List<MarketingCoordinatorEntity> coordinators = coordinatorService.findByFacultyId(articleSaved.getStudent().getFaculty().getId());
-            for (MarketingCoordinatorEntity coordinatorEntity : coordinators) {
-                emailUntil.sendEmailNotification(coordinatorEntity.getEmail(), message);
+            if (article.getId() == null) {
+                ArticleEntity articleSaved = articleService.save(article, fileUpload, fileImage);
+                String message = "<p>Student " + articleSaved.getStudent().getEmail() + " have submitted a new article on topic " + articleSaved.getTopic().getName() + "</p>";
+                List<MarketingCoordinatorEntity> coordinators = coordinatorService.findByFacultyId(articleSaved.getStudent().getFaculty().getId());
+                for (MarketingCoordinatorEntity coordinatorEntity:coordinators){
+                    emailUntil.sendEmailNotification(coordinatorEntity.getEmail(), message);
+                }
+            } else {
+                articleService.update(article, fileUpload, fileImage);
             }
-            }else{
-                articleService.update(article,fileUpload,fileImage);
-            }
-
 
         } catch (IOException e) {
             model.addAttribute("article", new ArticleEntity());
             model.addAttribute("topic", topicService.findByCode(article.getTopic().getCode()));
             model.addAttribute("message", "Can not add or update article");
-            return  "redirect:/article/post/" + article.getTopic().getCode();
+            return "article-student-post";
         }
         ra.addFlashAttribute("message", "Submit article successfully");
-        System.out.println("");
-
         return "redirect:/article/post/" + article.getTopic().getCode();
-
-    }
-
-    @PostMapping("/post/update")
-    public String Update(HttpServletRequest request, RedirectAttributes ra, @Param("fileUpload") MultipartFile fileUpload,
-                         @Param("fileImage") MultipartFile fileImage) throws Exception {
-        String id = request.getParameter("id");
-        String title = request.getParameter("title");
-        ArticleEntity entity = new ArticleEntity();
-        entity.setId(Long.parseLong(id));
-        entity.setTitle(title);
-        entity = articleService.update(entity,fileUpload, fileImage);
-        return "redirect:/";
     }
 
     @GetMapping("/download")
@@ -158,7 +192,7 @@ public class ArticleController {
         return "redirect:/article/detail/" + id;
     }
 
-    @GetMapping("/delete/{code}/{id}")
+    @RequestMapping("/delete/{code}/{id}")
     public String deleteArticle(@PathVariable("id") Long id, @PathVariable("code") String code, RedirectAttributes ra) {
         CustomUserDetail userDetail = UserInfor.getPrincipal();
         try {
@@ -174,65 +208,37 @@ public class ArticleController {
     }
 
 
-    @GetMapping("/manager/{code}")
-    public String managerArticle(@PathVariable("code") String topicCode, Model model) throws Exception {
-        CustomUserDetail entity = UserInfor.getPrincipal();
-        if (entity != null && entity.getPosition().equals("coordinator")) {
-            MarketingCoordinatorEntity coordinator = coordinatorService.findByEmail(entity.getUsername());
-            model.addAttribute("articlesActive", articleService.findByFacultyAndTopicAndStatus(coordinator.getFaculty().getCode(), topicCode, 1));
-            model.addAttribute("articlesEnable", articleService.findByFacultyAndTopicAndStatus(coordinator.getFaculty().getCode(), topicCode, 0));
-            model.addAttribute("newArticle", articleService.findByFacultyAndTopicAndStatus(coordinator.getFaculty().getCode(), topicCode, -1));
-            model.addAttribute("topic", topicService.findByCode(topicCode));
-            return "article/article-manager";
-        } else {
-            throw new Exception("Not Found");
-        }
 
-    }
-
-    @GetMapping("/post/{code}")
-    public String showPostOfStudentByTopic(@PathVariable("code") String topicCode, Model model) throws Exception {
-        CustomUserDetail userDetail = UserInfor.getPrincipal();
-        StudentEntity student = studentService.findByEmail(userDetail.getUsername());
-        if (student != null) {
-            model.addAttribute("articles", articleService.findAllByStudentIdAndTopicCode(student.getId(), topicCode));
-            model.addAttribute("topic", topicService.findByCode(topicCode));
-        } else {
-            throw new Exception("Not Found");
-        }
-        return "article/article-student-post";
-    }
 
     @PostMapping("/manager/comment")
     public String commentArticle(@RequestParam("id") Long articleId,
                                  @RequestParam("comment") String comment,
-                                 RedirectAttributes ra) throws Exception {
-        if(comment.equals("")){
-            ra.addFlashAttribute("message","Please input your comment");
-            return "";
+                                 RedirectAttributes ra) {
+        try {
+            ArticleEntity articleEntity = articleService.saveComment(articleId, comment);
+            ra.addFlashAttribute("message", "Comment Success");
+            return "redirect:/article/detail/" + articleEntity.getId();
+        } catch (Exception e) {
+            ra.addFlashAttribute("messageError", e.getMessage());
         }
-        ArticleEntity articleEntity = articleService.saveComment(articleId, comment);
-        ra.addFlashAttribute("message", "Comment Success");
-        return "redirect:/article/detail/" + articleEntity.getId();
+        return "redirect:/topic/manager";
 
     }
 
-    @GetMapping("/detail/{id}")
+    @RequestMapping("/detail/{id}")
     public String detailArticle(@PathVariable("id") Long id, Model model) throws Exception {
         ArticleEntity articleEntity = articleService.findById(id);
-        final SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        final SimpleDateFormat df = new SimpleDateFormat( "dd-MM-yyyy" );
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTime(articleEntity.getCreatedDate());
-        calendar.add(GregorianCalendar.DATE, 14);
+        calendar.add(GregorianCalendar.DATE,14);
         Date date = df.parse(df.format(calendar.getTime()));
-        model.addAttribute("disableCommentDate", date);
+        model.addAttribute("disableCommentDate",date);
         model.addAttribute("article", articleEntity);
         return "article/detail";
     }
-    public Calendar getDate(Date date){
-        return null;
-    }
-    @GetMapping("/guest")
+
+    @RequestMapping("/guest")
     public String findAllForGuest(Model model) {
         CustomUserDetail userDetail = UserInfor.getPrincipal();
         GuestEntity guestEntity = guestService.findByUserName(userDetail.getUsername());
@@ -244,16 +250,16 @@ public class ArticleController {
     }
 
     @GetMapping("/statistics-report/{id}")
-    public String findArticleForStatisticsByFaculty(@PathVariable("id") String id, Model model) {
-        model.addAttribute("acceptedArticle", articleService.findAllAcceptedArticleByFaculty(id));
-        model.addAttribute("rejectedArticle", articleService.findAllRejectedArticleByFaculty(id));
+    public String findArticleForStatisticsByFaculty(@PathVariable("id") String id, Model model){
+        model.addAttribute("acceptedArticle",articleService.findAllAcceptedArticleByFaculty(id));
+        model.addAttribute("rejectedArticle",articleService.findAllRejectedArticleByFaculty(id));
         return "article/statistic-report";
     }
 
     @GetMapping("/exception-report/{id}")
     public String findArticleForExceptionReport(@PathVariable("id") String id, Model model) throws ParseException {
-        model.addAttribute("articlesNoCom", articleService.findAllArticleWithoutCommentByFaculty(id));
-        model.addAttribute("articlesNoComAf14", articleService.findAllArticleWithoutCommentAfter14DayByFaculty(id));
+        model.addAttribute("articlesNoCom",articleService.findAllArticleWithoutCommentByFaculty(id));
+        model.addAttribute("articlesNoComAf14",articleService.findAllArticleWithoutCommentAfter14DayByFaculty(id));
         return "article/exception-report";
     }
 

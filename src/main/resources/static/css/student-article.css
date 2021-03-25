@@ -1,0 +1,43 @@
+.title-tp-show-wrapper img{
+    width: 100%;
+    height: auto;
+}
+
+.title-tp-show-wrapper {
+    position: relative;
+}
+
+.text-title-tp-show-wrapper {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    color: #fff;
+}
+
+.text-title {
+    color: #1C7B78;
+}
+
+body {
+    background-color: #010116;
+}
+
+.tp-show-wrapper {
+    color:#fff;
+}
+
+.tp-show-wrapper li {
+    margin-bottom: 40px;
+}
+
+.submit-tp-show-wrapper {
+    padding-left: 50px;
+}
+
+.submit-tp-show-wrapper li{
+    margin-bottom: 10px;
+}
+
+.footer {
+    background-color: #1DDDB4;
+}

@@ -6,90 +6,95 @@
     <title>Title</title>
     <div th:replace="common/link :: header-css"/>
     <link rel="stylesheet" th:href="@{'/css/detail.css'}">
+    <script src="https://kit.fontawesome.com/0e8cd08e46.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 <div th:replace="common/header :: header"/>
-<div class="container">
-    <th:block th:if="${message != null}">
-        <div class="alert alert-primary text-success">[[${message}]]</div>
-    </th:block>
-    <div class="rp-show-wrapper">
-        <div class="wrapper">
-            <div class="rp-img">
-                <img th:src="${article.imagePath}" alt="">
-            </div>
-            <div class="rp-discrible-wrapper">
-                <div class="title">
-                    <h1>[[${article.title}]]</h1>
-                    <hr>
+<div class="container-area">
+    <div th:replace="common/side-bar :: side-bar"/>
+    <div class="container">
+        <th:block th:if="${message != null}">
+            <div class="alert alert-primary text-success">[[${message}]]</div>
+        </th:block>
+        <div class="rp-show-wrapper">
+            <div class="wrapper">
+                <div class="rp-img">
+                    <img th:src="${article.imagePath}" alt="">
                 </div>
-                <div class="discrible">
-                    <div class="author">
-                        <h5>Author:</h5>
-                        <p>[[${article.student.email}]]</p>
+                <div class="rp-discrible-wrapper">
+                    <div class="title">
+                        <h1>[[${article.title}]]</h1>
+                        <hr>
                     </div>
-                    <div class="author">
-                        <h5>Status:</h5>
-                        <th:block th:switch="${article.status}">
-                            <p id="status" class="text-warning" th:case="-1">Not yet rated</p>
-                            <p id="status" class="text-danger" th:case="0">Disable</p>
-                            <p id="status" class="text-success" th:case="1">Accepted</p>
-                        </th:block>
+                    <div class="discrible">
+                        <div class="author">
+                            <h5>Author:</h5>
+                            <p>[[${article.student.email}]]</p>
+                        </div>
+                        <div class="author">
+                            <h5>Status:</h5>
+                            <th:block th:switch="${article.status}">
+                                <p id="status" class="text-warning" th:case="-1">Not yet rated</p>
+                                <p id="status" class="text-danger" th:case="0">Rejected</p>
+                                <p id="status" class="text-success" th:case="1">Selected</p>
+                            </th:block>
+                        </div>
                     </div>
-                </div>
-                <div class="rp-button">
-                    <div class="button">
-                        <a th:href="@{${article.filePath}}">View</a>
-                    </div>
-                    <!--                    <div class="button">-->
-                    <!--                        <a th:href="@{'/article/download/'+${article.id}}">Download</a>-->
-                    <!--                    </div>-->
-                    <div class="button special">
-                        <th:block sec:authorize="hasAuthority('COORDINATOR')">
-                            <a href="" id="make-a-grade">Censorship</a>
-                            <div class="grade" id='disable'>
-                                <a th:href="@{'/article/manager/status/'+${article.topic.code}+'/'+${article.id}+'/0'}">Reject</a>
-                            </div>
-                            <div class="grade" id='active'>
-                                <a th:href="@{'/article/manager/status/'+${article.topic.code}+'/'+${article.id}+'/1'}"
-                                >Accept</a>
-                            </div>
-                        </th:block>
+                    <div class="rp-button">
+                        <div class="button">
+                            <a th:href="@{${article.filePath}}">View</a>
+                        </div>
+                        <!--                    <div class="button">-->
+                        <!--                        <a th:href="@{'/article/download/'+${article.id}}">Download</a>-->
+                        <!--                    </div>-->
+                        <div class="button special">
+                            <th:block sec:authorize="hasAuthority('COORDINATOR')">
+                                <a href="" id="make-a-grade">Assessment</a>
+                                <div class="grade" id='disable'>
+                                    <a th:href="@{'/article/manager/status/'+${article.topic.code}+'/'+${article.id}+'/0'}">Reject</a>
+                                </div>
+                                <div class="grade" id='active'>
+                                    <a th:href="@{'/article/manager/status/'+${article.topic.code}+'/'+${article.id}+'/1'}"
+                                    >Select</a>
+                                </div>
+                            </th:block>
+                        </div>
                     </div>
 
                 </div>
+            </div>
+            <div sec:authorize="hasAuthority('STUDENT')">
                 <hr>
-                <div sec:authorize="hasAuthority('STUDENT')">
-                    <th:block th:if="${article.comment != null && !article.comment.equals('')}">
-                        <h5>Feedback of coordinator</h5>
-                        <blockquote>[[${article.comment}]]</blockquote>
-                    </th:block>
-                </div>
+                <h5>Feedback of coordinator</h5>
+                <th:block th:if="${article.comment != null && !article.comment.equals('')}">
+                    <textarea rows="1" class="input-sizer" placeholder="Type a Comment..." name='comment'
+                              th:text="${article.comment}" disabled></textarea>
+                </th:block>
+                <th:block th:if="${article.comment == null}">
+                    <p style="padding: 20px; color: #dc3545">Your Coordinator hasn't given you Comment yet.</p>
+                </th:block>
             </div>
-        </div>
-
-        <div sec:authorize="hasAuthority('COORDINATOR')">
-            <hr>
-<!--            <th:block th:if="${article.getCreatedDate().after(disableCommentDate)}">-->
+            <div sec:authorize="hasAuthority('COORDINATOR')">
+                <hr>
+                <!--            <th:block th:if="${article.getCreatedDate().after(disableCommentDate)}">-->
                 <form th:action="@{/article/manager/comment}" th:method="post" id="cmt">
                     <div class="input-cmt-wrapper">
-                        <label class="input-sizer stacked">
-                            <textarea oninput="this.parentNode.dataset.value = this.value" rows="1"
-                                      placeholder="Type a Comment..." name='comment' form="cmt"
-                                      th:text="${article.comment}"></textarea>
-                        </label>
+                        <textarea rows="1" class="input-sizer" placeholder="Type a Comment..." name='comment'
+                                  th:text="${article.comment}"></textarea>
                         <input type="hidden" th:value="${article.id}" name="id"/>
                         <div class="button-tele">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit"><i class="fa fa-share telegram"></i></button>
                         </div>
                     </div>
                 </form>
-<!--            </th:block>-->
-<!--            <th:block th:if="${article.getCreatedDate().before(disableCommentDate)}">-->
-<!--                <p>You can not comment</p>-->
-<!--            </th:block>-->
-        </div>
+                <!--            </th:block>-->
+                <!--            <th:block th:if="${article.getCreatedDate().before(disableCommentDate)}">-->
+                <!--                <p>You can not comment</p>-->
+                <!--            </th:block>-->
+            </div>
 
+        </div>
     </div>
 </div>
 

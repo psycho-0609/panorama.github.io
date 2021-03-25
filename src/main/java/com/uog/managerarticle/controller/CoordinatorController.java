@@ -1,6 +1,8 @@
 package com.uog.managerarticle.controller;
 
+import com.uog.managerarticle.entity.AccountEntity;
 import com.uog.managerarticle.entity.MarketingCoordinatorEntity;
+import com.uog.managerarticle.service.IAccountService;
 import com.uog.managerarticle.service.ICoordinatorService;
 import com.uog.managerarticle.service.IFacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,10 @@ public class CoordinatorController {
 
     @Autowired
     private IFacultyService facultyService;
+
+    @Autowired
+    private IAccountService accountService;
+
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
 
@@ -54,19 +60,27 @@ public class CoordinatorController {
 
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute("coordinator") MarketingCoordinatorEntity entity, BindingResult bindingResult, RedirectAttributes ra, Model  model){
+        model.addAttribute("faculties", facultyService.findAll());
         if (bindingResult.hasErrors()){
             model.addAttribute("faculties",facultyService.findAll());
-            return "coordinator/edit";
-        }
-        try {
-            coordinatorService.findById(entity.getId());
-            ra.addFlashAttribute("mesage","User is existed");
-            return "redirect:edit";
-        }catch (Exception ex){
-            coordinatorService.addNew(entity);
+            return "coordinator/add";
         }
 
-        return "redirect:list";
+        AccountEntity userEntity = accountService.findAccountByUserName(entity.getEmail());
+        try {
+            coordinatorService.findById(entity.getId());
+            model.addAttribute("message","Coordinator ID existed.");
+            return "coordinator/add";
+        }catch (Exception ex){
+            if(userEntity != null) {
+                model.addAttribute("message", "Email existed.");
+                return "coordinator/add";
+            }
+            coordinatorService.addNew(entity);
+            ra.addFlashAttribute("message", "Add Coordinator successfully.");
+        }
+
+        return "redirect:/coordinator/list";
     }
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute("coordinator") MarketingCoordinatorEntity entity, BindingResult bindingResult, RedirectAttributes ra, Model  model) throws Exception {

@@ -1,10 +1,9 @@
 package com.uog.managerarticle.controller;
 
+import com.uog.managerarticle.entity.AccountEntity;
 import com.uog.managerarticle.entity.ArticleEntity;
 import com.uog.managerarticle.entity.StudentEntity;
-import com.uog.managerarticle.service.IArticleService;
-import com.uog.managerarticle.service.IFacultyService;
-import com.uog.managerarticle.service.IStudentService;
+import com.uog.managerarticle.service.*;
 import com.uog.managerarticle.user.CustomUserDetail;
 import com.uog.managerarticle.user.UserInfor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +38,9 @@ public class StudentController {
     @Autowired
     private IFacultyService facultyService;
 
+    @Autowired
+    private IAccountService accountService;
+
     @GetMapping("/list")
     public String showAllStudent(Model model) {
         model.addAttribute("students", studentService.findAll());
@@ -65,16 +67,24 @@ public class StudentController {
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute("student") StudentEntity studentEntity, BindingResult bindingResult, RedirectAttributes ra, Model model) {
         System.out.println(studentEntity.getId());
+        model.addAttribute("faculties", facultyService.findAll());
         if (bindingResult.hasErrors()) {
             model.addAttribute("faculties", facultyService.findAll());
-            return "student/edit";
+            return "student/add";
         }
+//        StudentEntity entity = studentService.findByEmail(studentEntity.getEmail());
+        AccountEntity entity = accountService.findAccountByUserName(studentEntity.getEmail());
         try {
             studentService.findById(studentEntity.getId());
-            ra.addFlashAttribute("message","Student existed");
+            model.addAttribute("message","Student ID existed.");
+            return "student/add";
         }catch (Exception ex){
+            if(entity != null) {
+                model.addAttribute("message", "Email existed.");
+                return "student/add";
+            }
             studentService.save(studentEntity);
-            ra.addFlashAttribute("message", "add student success");
+            ra.addFlashAttribute("message", "Add Student successfully.");
         }
         return "redirect:/student/list";
     }
@@ -107,12 +117,17 @@ public class StudentController {
         model.addAttribute("student", studentEntity);
         model.addAttribute("numberArticleActive", articleService.countAllByStatusAndStudentId(1, studentEntity.getId()));
         model.addAttribute("numberArticleDisable", articleService.countAllByStatusAndStudentId(0, studentEntity.getId()));
+        model.addAttribute("articlesActive", articleService.findAllByStudentIdAndStatus(studentEntity.getId(), 1));
+        model.addAttribute("articlesDisable", articleService.findAllByStudentIdAndStatus(studentEntity.getId(), 0));
+        model.addAttribute("articlesNew", articleService.findAllByStudentIdAndStatus(studentEntity.getId(), -1));
+
         return "student/student-article";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteStudent(@PathVariable("id") String id) throws Exception {
+    public String deleteStudent(@PathVariable("id") String id, RedirectAttributes ra) throws Exception {
         studentService.delete(id);
+        ra.addFlashAttribute("message","Delete Successfully");
         return "redirect:/student/list";
     }
 

@@ -18,6 +18,9 @@ public interface IArticleService {
     List<ArticleEntity> finByStudentIdAndStatus(String id, Integer status);
     List<ArticleEntity> findByFacultyAndTopicAndStatus(String faculty, String topicCode, Integer status);
     List<ArticleEntity> findAllByStudentIdAndTopicCode(String id, String code);
+
+    List<ArticleEntity> findAllByStudentIdAndStatus(String id, Integer status);
+
     List<ArticleEntity> findAllByStatus(Integer status);
     List<ArticleEntity> findAllByStudentId(String studentId);
     Long countAllByStatusAndStudentId(Integer status, String studentId);
