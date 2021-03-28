@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <div th:replace="common/link :: header-css"/>
+    <link rel="stylesheet" th:href="@{'/css/header.css'}">
+    <link rel="stylesheet" th:href="@{'/css/footer.css'}">
+    <link rel="stylesheet" th:href="@{'/css/profile.css'}">
+    <link rel="stylesheet" th:href="@{'/css/adduser.css'}">
+    <style>
+        .form-group {
+            margin-bottom: 0px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper row">
+    <div class="rp-img col-4">
+        <img src="/image/class.jpg" alt="">
+        <div class="title">
+            <h2 th:text="${user.name}"/>
+        </div>
+    </div>
+    <div class="rp-discrible-wrapper col-8">
+        <div class="discrible" th:object="${user}">
+            <div>
+                <p>ID : </p>
+                <p th:text="${user.id}"/>
+            </div>
+            <div>
+                <p>Email: </p>
+                <p th:text="${user.email}"/>
+            </div>
+            <div>
+                <p>Date of Birth : </p>
+                <p th:text="${#dates.format(user.dob,'dd-MM-yyyy')}"/>
+            </div>
+            <div>
+                <p>Phone : </p>
+                <p th:text="${user.phone}"/>
+            </div>
+            <div>
+                <p>Address : </p>
+                <p th:text="${user.address}"/>
+            </div>
+            <div>
+                <p>Faculty : </p>
+                <p th:text="${user.faculty.name}"/>
+            </div>
+        </div>
+        <div class="rp-button">
+            <div class="button special">
+                <a href="">Edit Profile</a>
+            </div>
+        </div>
+        <form th:action="@{/student/saveedit}" th:method="POST" th:object="${user}">
+            <div class="discrible form-edit">
+                <input type="hidden" th:field="*{name}" th:value="${user.name}">
+                <div>
+                    <p>ID : </p>
+                    <div class="form-group" style="width: 100%">
+                        <th:block th:if="${user.id != null}">
+                            <input type="text" class="form-control" th:field="*{id}" disabled>
+                            <input type="hidden" th:field="*{id}">
+                        </th:block>
+                        <th:block th:if="${user.id == null}">
+                            <input type="text" class="form-control" th:field="*{id}">
+                        </th:block>
+                    </div>
+                </div>
+                <div>
+                    <p>Email : </p>
+                    <div class="form-group" style="width: 100%">
+                        <th:block th:if="${user.email != null}">
+                            <input type="text" class="form-control" th:field="*{email}" disabled>
+                            <input type="hidden" th:field="*{email}">
+                        </th:block>
+                        <th:block th:if="${user.email == null}">
+                            <input type="text" class="form-control" th:field="*{email}">
+                        </th:block>
+                    </div>
+                </div>
+                <div>
+                    <p>Date of Birth : </p>
+                    <div class="form-group" style="width: 100%">
+                        <input type="date" class="form-control" th:field="*{dob}">
+                        <p class="error" th:if="${#fields.hasErrors('dob')}" th:errors="*{user.dob}"></p>
+                    </div>
+                </div>
+                <div>
+                    <p>Phone : </p>
+                    <div class="form-group" style="width: 100%">
+                        <input type="number" class="form-control" th:field="*{phone}">
+                        <p class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+                    </div>
+                </div>
+                <div>
+                    <p>Address : </p>
+                    <div class="form-group" style="width: 100%">
+                        <input type="text" class="form-control" th:field="*{address}">
+                        <p class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+                    </div>
+                </div>
+                <div>
+                    <p>Faculty : </p>
+                    <div class="form-group" style="width: 100%">
+                        <th:block th:if="${user.faculty.name != null}">
+                            <input type="text" class="form-control" th:value="${user.faculty.name}" disabled>
+                            <input type="hidden" th:field="*{faculty.id}">
+                        </th:block>
+                        <th:block th:if="${user.faculty.name == null}">
+                            <input type="text" class="form-control" th:field="*{faculty.id}">
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+            <div class="rp-button form-edit">
+                <div class="button">
+                    <button type="submit"><a>Save Profile</a></button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+</body>
+</html>

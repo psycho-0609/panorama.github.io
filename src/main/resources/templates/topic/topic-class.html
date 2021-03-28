@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="common/link :: header-css"/>
+    <link rel="stylesheet" th:href="@{'/css/topic-list.css'}">
+    <link rel="stylesheet" th:href="@{'/css/topic-class.css'}">
+</head>
+<body>
+
+<div th:replace="common/header :: header"/>
+<div class="container-area">
+    <div th:replace="common/side-bar :: side-bar"></div>
+    <div class="container">
+        <div class="topic-area row">
+            <div class="topic-field col-lg-4 col-md-6 col-12" th:each="item:${topics}">
+                <div class="topic-content">
+                    <div class="image-topic">
+                        <div class="topic-hidden-content">
+                            <div class="topic-title">
+                                <h3 th:text="${item.name} + ' - ' + ${item.code}"/>
+                            </div>
+                            <div class="topic-date">
+                                <div><b>Closure Date: [[${#dates.format(item.deadline, 'dd-MM-yyyy')}]]</b></div>
+                                <div><b>Final Date: [[${#dates.format(item.closeDate, 'dd-MM-yyyy')}]]</b></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="image-name">
+                        <th:block sec:authorize="hasAuthority('COORDINATOR')">
+                            <a th:href="@{'/article/manager/'+${item.code}}">[[${item.name}]]</a>
+                        </th:block>
+                        <th:block sec:authorize="hasAuthority('STUDENT')">
+                            <a th:href="@{'/article/post/'+${item.code}}">[[${item.name}]]</a>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="common/footer :: footer"/>
+</body>
+</html>
