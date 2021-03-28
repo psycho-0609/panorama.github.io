@@ -37,15 +37,15 @@ public class GuestController {
     private IAccountService accountService;
 
     @GetMapping("/list")
-    public String findAll(Model model){
-        model.addAttribute("guests",guestService.findAll());
+    public String findAll(Model model) {
+        model.addAttribute("guests", guestService.findAll());
         return "guest/list";
     }
 
     @GetMapping("/edit")
-    public String addGuest(Model model, @RequestParam(value = "id",required = false) String id){
-        model.addAttribute("guest",new GuestEntity());
-        model.addAttribute("faculties",facultyService.findAll());
+    public String addGuest(Model model, @RequestParam(value = "id", required = false) String id) {
+        model.addAttribute("guest", new GuestEntity());
+        model.addAttribute("faculties", facultyService.findAll());
         return "guest/add";
     }
 
@@ -69,10 +69,10 @@ public class GuestController {
         AccountEntity entity = accountService.findAccountByUserName(guestEntity.getEmail());
         try {
             guestService.findById(guestEntity.getId());
-            model.addAttribute("message","Guest ID existed");
+            model.addAttribute("message", "Guest ID existed");
             return "guest/add";
-        }catch (Exception ex){
-            if(entity != null) {
+        } catch (Exception ex) {
+            if (entity != null) {
                 model.addAttribute("message", "Email existed");
                 return "guest/add";
             }
@@ -83,18 +83,25 @@ public class GuestController {
     }
 
     @PostMapping("/update")
-    public String update (@Valid @ModelAttribute("guest") GuestEntity guestEntity, BindingResult bindingResult, RedirectAttributes ra, Model model) throws Exception {
-        if(bindingResult.hasErrors()){
-            model.addAttribute("faculties",facultyService.findAll());
-            return "redirect:edit/"+guestEntity.getId();
+    public String update(@Valid @ModelAttribute("guest") GuestEntity guestEntity, BindingResult bindingResult, RedirectAttributes ra, Model model) throws Exception {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("faculties", facultyService.findAll());
+            return "redirect:edit/" + guestEntity.getId();
         }
-        try {
-            guestService.findById(guestEntity.getId());
-            ra.addFlashAttribute("message","Id user existed");
-        }catch (Exception ex){
-            guestService.update(guestEntity);
-        }
+        guestService.update(guestEntity);
+        ra.addFlashAttribute("message", "Update succesfully.");
         return "redirect:list";
+    }
+
+    @PostMapping("/saveedit")
+    public String saveedit(@Valid @ModelAttribute("guest") GuestEntity user, BindingResult bindingResult, RedirectAttributes ra, Model model) throws Exception {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/user/profile";
+        }
+        System.out.println(user);
+        guestService.update(user);
+        System.out.println("123");
+        return "redirect:/user/profile";
     }
 
     @GetMapping("/delete/{id}")

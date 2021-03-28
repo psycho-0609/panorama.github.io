@@ -25,7 +25,9 @@
         <th:block sec:authorize="hasAuthority('ADMIN')">
             <th:block th:include="common/admin-nav"></th:block>
         </th:block>
-
+        <th:block sec:authorize="hasAuthority('GUEST')">
+            <th:block th:include="common/guestnavbar"></th:block>
+        </th:block>
     </div>
 </div>
 </body>

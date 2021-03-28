@@ -13,13 +13,21 @@ $(function () {
             $(this).find('span i').removeClass('fa-angle-right');
             $(this).find('span i').addClass('fa-angle-down');
             $(this).closest('.cate-bar').find('.link-header').slideDown('1000');
-            $(this).closest('.cate-bar').find('.link-header').css('display', 'flex');
+        }
+        $('.cate-bar-title').removeClass('active');
+        if ($(this).find('span i').hasClass('fa-angle-down')) {
+            $(this).addClass('active');
         }
     })
 
-    $('.hamburger').click(function(e) {
+    $('.hamburger').click(function (e) {
         e.preventDefault();
-        $('.side-bar').toggle('1000');
-        $('.side-bar-content').toggle('1000');
+        var effect = 'slide';
+        var duration = 1000;
+
+        $('.side-bar').toggle(effect, 'left', duration);
+        // $('.side-bar-content').toggle(effect, 'left', duration);
+        $('.container').toggleClass('non-pl');
+        $('.container-page').toggleClass('non-pl');
     })
 })

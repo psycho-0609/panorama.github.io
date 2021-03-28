@@ -5,22 +5,32 @@
     <title>Home</title>
     <div th:replace="common/link :: header-css"/>
     <link rel="stylesheet" th:href="@{'/css/index.css'}">
+    <link rel="stylesheet" th:href="@{'/css/topic-class.css'}">
 </head>
 <body>
 <div th:replace="common/header :: header"/>
 <div class="container-area">
     <div th:replace="common/side-bar :: side-bar"></div>
     <div class="container">
-        <div class="content-selected">
-            <div th:each="item: ${articles}" class="item-selected col-12">
-                <div class="card" style="width: 100%;">
-                    <img th:src="${item.imagePath}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">[[${item.title}]]</h5>
-                        <p>[[${item.name}]]</p>
-                        <a th:href="@{${item.filePath}}" class="btn btn-warning">View</a>
-                        <th:block th:if="${item.topic.closeDate.before(#dates.createNow())}">
-                            <a th:href="@{'/article/download?id='+${item.id}}" class="btn btn-primary">download</a>
+        <div class="topic-area row">
+            <div class="topic-field col-lg-4 col-md-6 col-12" th:if="${articles.size() > 0}" th:each="item:${articles}">
+                <div class="topic-content">
+                    <div class="image-topic" th:style="'background: url('+ ${item.imagePath} + '); background-repeat: no-repeat; background-size: cover; background-position: center center;'">
+                        <div class="topic-hidden-content">
+                            <div class="topic-title">
+                                <h3 th:text="${item.title}"/>
+                            </div>
+                            <div class="topic-date">
+                                <div><p th:text="'Author: ' + ${item.student.name}"/></div>
+                                <div><p th:text="'Topic: ' + ${item.topic.name}"/></div>
+                                <div><p th:text="'Faculty: ' + ${item.student.faculty.name}"/></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="image-name">
+                            <a th:href="@{${item.filePath}}" th:text="${item.title}"/>
+                        <th:block sec:authorize="hasAuthority('MANAGER')" th:if="${item.topic.closeDate.before(#dates.createNow())}">
+                            <a class="btn-down" th:href="@{'/article/download?id='+${item.id}}"><i class="fa fa-download" aria-hidden="true"></i></a>
                         </th:block>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 * {
     margin: 0px;
     padding: 0px;
-    font-family: Roboto;
+    font-family: Helvetica, Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
 }
@@ -15,14 +15,13 @@ p {
 }
 
 body {
-    background-color: #f5f5f8;
+    background-color: #eff3f6;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow-x: hidden;
 }
 
-a, .link-header input {
+a {
     color: white;
     text-decoration: none;
 }
@@ -31,46 +30,50 @@ a:hover {
     color: #495057;
 }
 
-.link-header input:hover {
-    color: #495057;
-}
-
 .nav-header a:hover {
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.5);
+    color: #1DDDB4;
 }
 
 .container-area {
-    display: flex;
+    /*display: flex;*/
     min-height: 100vh;
-    margin-bottom: 150px;
+}
+
+.container-page {
+    /*margin: 0px 30px;*/
+    margin-top: 50px;
+    width: 100%;
+    min-height: 100vh;
+    padding-left: 200px;
+    transition: 1s all;
 }
 
 .container {
-    padding: 50px 0px;
+    padding-left: 200px;
+    width: 100%;
+    transition: 1s all;
+}
+
+.non-pl {
+    padding-left: 0px;
 }
 
 .side-bar {
-    /* position: fixed; */
+    position: fixed;
     max-width: 200px;
     width: 100%;
-    background-color: #212529;
-    z-index: 200;
+    background-color: #3f4d67;
+    z-index: 100;
     overflow: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    height: 100%;
 }
 
 .side-bar-content {
     position: fixed;
     width: 200px;
-    height: 100vh;
-    z-index: 200;
-    background-color: #212529;
-}
-
-.container-page {
-    width: 100%;
 }
 
 .side-bar::-webkit-scrollbar {
@@ -80,11 +83,12 @@ a:hover {
 .top-header {
     position: sticky;
     top: 0;
-    background-color: #343a40;
+    /* background-color: #343a40; */
+    background-color: #3f4d67;
     display: flex;
     height: 80px;
-    /*box-shadow: 0px 4px 10px 0px;*/
-    z-index: 210;
+    box-shadow: 1px 0 20px 0 #3f4d67;
+    z-index: 150;
     width: 100%;
 }
 
@@ -100,15 +104,37 @@ a:hover {
     text-align: center;
 }
 
-.cate-bar > div {
-    cursor: pointer;
-}
-
-.link-header:first-child {
+.nav-link-top {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
     width: 200px;
+    /* background: linear-gradient(-45deg, rgba(52, 58, 64, 0), rgb(52, 58, 64)); */
+    background-color: #343a40;
+    /* box-shadow: 0px 4px 10px 0px; */
+    height: 80px;
 }
 
-.link-header a, .link-header input {
+.nav-link-top {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-link-top .link-header:first-child {
+    width: 100%;
+}
+
+.nav-link-top .link-header:last-child {
+    /* position: absolute; */
+    /* right: 0px;
+    top: 50%; */
+    /* transform: translate(0px, -50%); */
+    padding: 0px 10px;
+}
+
+.link-header a {
     font-size: 25px;
 }
 
@@ -156,19 +182,6 @@ a:hover {
     color: rgba(255, 255, 255, 0.5);
 }
 
-.side-bar button {
-    font-size: 18px;
-    color: rgba(255, 255, 255, 0.5);
-    padding: 0px;
-    border: none;
-    ourline: none;
-}
-
-.side-bar button:hover {
-    color: rgba(255, 255, 255, 0.5);
-    text-decoration: underline
-}
-
 .side-bar .link-header.active a {
     color: aliceblue;
 }
@@ -178,7 +191,13 @@ a:hover {
     align-items: center;
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
+    padding-left: 3rem;
     position: relative;
+    text-align: left;
+}
+
+.side-bar .link-header button {
+    padding: 0px;
 }
 
 .title-bar {
@@ -186,11 +205,20 @@ a:hover {
     font-size: 0.75rem;
     font-weight: bold;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.25)
+    color: #e8edf7;
 }
 
 .cate-bar {
-    padding: 0rem 0.25rem 0.25rem 1rem;
+    padding: 0rem 0rem 0.25rem 0rem;
+}
+
+.cate-bar>div:hover {
+    color: #1DDDB4;
+}
+
+.cate-bar a:hover {
+    color: #1DDDB4 !important;
+    text-decoration: none;
 }
 
 .cate-bar-title {
@@ -198,8 +226,15 @@ a:hover {
     align-items: center;
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
+    padding-left: 1rem;
     position: relative;
-    color: rgba(255, 255, 255, 0.5);
+    color: #a9b7d0;
+    cursor: pointer;
+}
+
+.cate-bar-title.active {
+    background-color: #333f54;
+    color: #fff;
 }
 
 .cate-bar-title span {
@@ -209,6 +244,14 @@ a:hover {
 
 .cate-bar-title i {
     margin-right: 10px;
+}
+
+.cate-bar-link {
+    background: #39465e;
+}
+
+.cate-bar-link a {
+    color: #a9b7d0 !important;
 }
 
 @keyframes img {
@@ -224,7 +267,11 @@ a:hover {
 }
 
 @media only screen and (max-width: 992px) {
-    .side-bar {
-        position: fixed;
+    .container {
+        padding-left: 0px;
+    }
+
+    .container-page {
+        padding-left: 0px;
     }
 }

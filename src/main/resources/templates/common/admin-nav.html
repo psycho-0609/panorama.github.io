@@ -10,43 +10,43 @@
 <div class="cate-bar">
     <div class="cate-bar-title"><i class="fas fa-user"></i>Authentication <span><i
             class="fas fa-angle-right"></i></span></div>
-    <div class="link-header">
-        <a href="">Your Profile</a>
-    </div>
-    <div class="link-header">
-        <form th:action="@{/logout}" method="post">
-            <button class="btn" type="submit"><a>Logout</a></button>
-        </form>
+    <div class="cate-bar-link">
+        <div class="link-header">
+            <form th:action="@{/logout}" method="post">
+                <button class="btn" type="submit"><a>Logout</a></button>
+            </form>
+        </div>
     </div>
 </div>
 <div class="title-bar">Management</div>
 <div class="cate-bar">
     <div class="cate-bar-title"><i class="fas fa-users"></i> User <span><i
             class="fas fa-angle-right"></i></span></div>
-    <div class="link-header">
-        <a th:href="@{/coordinator/list}">Coordinator</a>
-    </div>
-    <div class="link-header">
-        <a th:href="@{/manager/list}">Manager</a>
-    </div>
-    <div class="link-header">
-        <a th:href="@{/student/list}">Student</a>
-    </div>
-    <div class="link-header">
-        <a th:href="@{/guest/list}">Guest</a>
+    <div class="cate-bar-link">
+        <div class="link-header">
+            <a th:href="@{/coordinator/list}">Coordinator</a>
+        </div>
+        <div class="link-header">
+            <a th:href="@{/manager/list}">Manager</a>
+        </div>
+        <div class="link-header">
+            <a th:href="@{/student/list}">Student</a>
+        </div>
+        <div class="link-header">
+            <a th:href="@{/guest/list}">Guest</a>
+        </div>
     </div>
 </div>
 <div class="cate-bar">
     <div class="cate-bar-title"><i class="fas fa-book-open"></i> Contributions <span><i
             class="fas fa-angle-right"></i></span></div>
-    <div class="link-header">
-        <a th:href="@{/faculty/list}">Faculty</a>
-    </div>
-    <div class="link-header">
-        <a th:href="@{/topic/manager}">Topic</a>
-    </div>
-    <div class="link-header">
-        <a th:href="@{/article/list}">Article</a>
+    <div class="cate-bar-link">
+        <div class="link-header">
+            <a th:href="@{/faculty/list}">Faculty</a>
+        </div>
+        <div class="link-header">
+            <a th:href="@{/topic/manager}">Topic</a>
+        </div>
     </div>
 </div>
 </body>

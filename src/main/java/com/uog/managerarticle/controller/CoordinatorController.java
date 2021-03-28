@@ -93,6 +93,16 @@ public class CoordinatorController {
         return "redirect:list";
     }
 
+    @PostMapping("/saveedit")
+    public String saveedit (@Valid @ModelAttribute("coordinator") MarketingCoordinatorEntity entity, BindingResult bindingResult, RedirectAttributes ra, Model  model) throws Exception {
+        if (bindingResult.hasErrors()){
+            return "redirect:/user/profile";
+        }
+        coordinatorService.update(entity);
+        ra.addFlashAttribute("message","Update Successfully");
+        return "redirect:/user/profile";
+    }
+
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") String id) throws Exception {
         coordinatorService.delete(id);

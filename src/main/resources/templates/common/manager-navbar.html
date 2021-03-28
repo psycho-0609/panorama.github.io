@@ -11,37 +11,32 @@
 <div class="cate-bar">
     <div class="cate-bar-title"><i class="fas fa-user"></i>Authentication <span><i
             class="fas fa-angle-right"></i></span></div>
-    <div class="link-header">
-        <a href="">Your Profile</a>
-    </div>
-    <div class="link-header">
-        <form th:action="@{/logout}" method="post">
-            <button class="btn" type="submit"><a>Logout</a></button>
-        </form>
+    <div class="cate-bar-link">
+        <div class="link-header">
+            <a th:href="@{/user/profile}">Your profile</a>
+        </div>
+        <div class="link-header">
+            <form th:action="@{/logout}" method="post">
+                <button class="btn" type="submit"><a>Logout</a></button>
+            </form>
+        </div>
     </div>
 </div>
 <div class="title-bar">Management</div>
 <div class="cate-bar">
     <div class="cate-bar-title"><i class="fas fa-book-open"></i> Contributions <span><i
             class="fas fa-angle-right"></i></span></div>
-    <div class="link-header">
-        <a th:href="@{/faculty/statistics-report}">Statistics Report</a>
-    </div>
-    <div class="link-header">
-        <a th:href="@{/faculty/exception-report}">Exception Report</a>
-    </div>
-    <div class="link-header">
-        <a th:href="@{/article/list}">Articles</a>
+    <div class="cate-bar-link">
+        <div class="link-header">
+            <a th:href="@{/faculty/statistics-report}">Statistics Report</a>
+        </div>
+        <div class="link-header">
+            <a th:href="@{/faculty/exception-report}">Exception Report</a>
+        </div>
+        <div class="link-header">
+            <a th:href="@{/article/list}">Articles</a>
+        </div>
     </div>
 </div>
-    <div class="link-header">
-        <a th:href="@{/faculty/statistics-report}">Statistics report</a>
-    </div>
-    <div class="link-header">
-        <a th:href="@{/faculty/exception-report}">Exception report</a>
-    </div>
-    <div class="link-header">
-        <a th:href="@{/article/list}">Selected articles</a>
-    </div>
 </body>
 </html>

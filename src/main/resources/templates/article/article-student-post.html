@@ -18,7 +18,8 @@
             <div class="header-area">
                 <div class="content-header">
                     <div class="first-content">
-                        <h1 th:text="'Submit article for ' + ${topic.name}"/>
+                        <h1>Submit article for [[${topic.name}]] <span id="btn-des">▼</span></h1>
+                        <p id="des" th:text="${topic.description}"/>
                         <p>It looks like you have completed the report and want to submit it now?<br>
                             Complete the steps below so your report can be viewed by your Coordinator.</p>
                     </div>
@@ -139,7 +140,7 @@
                                     </div>
                                 </div>
                                 <div class="submit-button-wrapper">
-                                    <input type="checkbox" required> I agree to our <a style="color:#dc3545">Terms of Use</a> and <a style="color: #dc3545">Privacy Policy</a>.
+                                    <input type="checkbox" required>I agree to our <a style="color:#dc3545"> Terms of Use </a> and <a style="color: #dc3545"> Privacy Policy</a>.
                                 </div>
                                 <div class="submit-button-wrapper">
                                     <div class="submit-button-div">
@@ -279,6 +280,17 @@
         if (!$(this).hasClass('active')) {
             $('.file-submission-text').toggleClass('active');
             $('.file-submission-content>div').toggle('500');
+        }
+    })
+
+    $('#btn-des').click(function () {
+        if ($(this).text() == '▲') {
+            $('#des').slideUp('1000');
+            $(this).text('▼')
+        }
+        else {
+            $('#des').slideDown('1000');
+            $(this).text('▲')
         }
     })
 </script>

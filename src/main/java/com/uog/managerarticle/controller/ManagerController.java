@@ -72,10 +72,20 @@ public class ManagerController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute("manager") MarketingManagerEntity managerEntity, RedirectAttributes ra) throws Exception {
+    public String update(@ModelAttribute("manager") MarketingManagerEntity managerEntity, BindingResult bindingResult, RedirectAttributes ra,  Model model) throws Exception {
+        if (bindingResult.hasErrors()){
+            return "manager/edit";
+        }
         managerService.update(managerEntity);
         ra.addFlashAttribute("message","Update successfully");
         return "redirect:/manager/list";
+    }
+
+    @PostMapping("/saveedit")
+    public String saveedit(@ModelAttribute("manager") MarketingManagerEntity managerEntity, RedirectAttributes ra) throws Exception {
+        managerService.update(managerEntity);
+        ra.addFlashAttribute("message","Update successfully");
+        return "redirect:/user/profile";
     }
 
     @GetMapping("/delete/{id}")

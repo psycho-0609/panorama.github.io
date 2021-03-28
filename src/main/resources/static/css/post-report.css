@@ -1,7 +1,11 @@
 .header-wrap {
     position: relative;
-    margin-top: -30px;
     margin-bottom: 160px;
+}
+
+.container-page {
+    margin: 0px;
+    margin-top: -30px;
 }
 
 .submit-wrapper, .header-bar, .header-bar-button, .img-acc, .account {
@@ -33,6 +37,16 @@
     background-repeat: no-repeat;
     height: 600px;
     content: "";
+}
+
+#btn-des {
+    font-size: 60px;
+}
+
+#des {
+    margin-left: 50px;
+    color: #1DDDB4;
+    display: none;
 }
 
 .content-header {
@@ -137,7 +151,7 @@ p {
     border-bottom-width: 80px;
     border-left-width: 100vw;
     border-left-color: #1DDDB4;
-    bottom: -160px;
+    /*bottom: -160px;*/
     right: 0px;
     position: absolute;
     z-index: -1;

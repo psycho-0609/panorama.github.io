@@ -30,12 +30,4 @@ public class UserController {
         model.addAttribute("user", user);
         return "user/user-profile";
     }
-
-    @PostMapping("/update")
-    public String updateProfile(Model model, CustomUserDetail user) {
-        System.out.println(model);
-        System.out.println(user);
-        return null;
-    }
-
 }

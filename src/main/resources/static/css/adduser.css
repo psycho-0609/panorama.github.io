@@ -2,8 +2,8 @@
 .content-submit {
     background-color: #fff;
     margin: auto;
-    margin-top: 50px;
-    padding: 20px 30px;
+    /*margin-top: 50px;*/
+    padding: 20px 30px !important;
 }
 
 .form-control {

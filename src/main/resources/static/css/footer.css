@@ -1,7 +1,7 @@
 .footer-container::before {
     position: absolute;
     content: "";
-    border: solid transparent;
+    /* border: solid transparent; */
     content: "";
     height: 0px;
     width: 0px;
@@ -11,7 +11,6 @@
     border-left-width: 100vw;
     border-left-color: #343a40;
     top: -79px;
-    overflowY: hidden;
 }
 
 .footer{
@@ -33,6 +32,9 @@
 .us{
     padding: 0px 50px;
     height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .contact-text{
     padding: 10px 0px;

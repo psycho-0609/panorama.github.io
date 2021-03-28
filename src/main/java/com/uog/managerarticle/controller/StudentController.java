@@ -2,6 +2,7 @@ package com.uog.managerarticle.controller;
 
 import com.uog.managerarticle.entity.AccountEntity;
 import com.uog.managerarticle.entity.ArticleEntity;
+import com.uog.managerarticle.entity.GuestEntity;
 import com.uog.managerarticle.entity.StudentEntity;
 import com.uog.managerarticle.service.*;
 import com.uog.managerarticle.user.CustomUserDetail;
@@ -98,6 +99,17 @@ public class StudentController {
         studentService.update(studentEntity);
         ra.addFlashAttribute("message", "update student success");
         return "redirect:/student/list";
+    }
+
+    @PostMapping("/saveedit")
+    public String saveedit(@Valid @ModelAttribute("student") StudentEntity user, BindingResult bindingResult, RedirectAttributes ra, Model model) throws Exception {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/user/profile";
+        }
+        System.out.println(user);
+        studentService.update(user);
+        System.out.println("123");
+        return "redirect:/user/profile";
     }
 
     @RequestMapping("/article/{id}")

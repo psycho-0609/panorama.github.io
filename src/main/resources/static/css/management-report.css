@@ -5,6 +5,7 @@
 
 .rp-categories-wrapper {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     border-bottom: 1px solid #dee2e6;
 }

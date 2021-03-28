@@ -22,118 +22,24 @@
     <div th:replace="common/side-bar :: side-bar"></div>
     <div class="container">
         <div class="rp-show-wrapper">
-            <div class="wrapper row" sec:authorize="hasAuthority('STUDENT')">
-                <div class="rp-img col-4">
-                    <img src="/image/class.jpg" alt="">
-                    <div class="title">
-                        <h2 th:text="${user.name}"/>
-                    </div>
-                </div>
-                <div class="rp-discrible-wrapper col-8">
-                    <div class="discrible" th:object="${user}">
-                        <div>
-                            <p>ID : </p>
-                            <p th:text="${user.id}"/>
-                        </div>
-                        <div>
-                            <p>Email: </p>
-                            <p th:text="${user.email}"/>
-                        </div>
-                        <div>
-                            <p>Date of Birth : </p>
-                            <p th:text="${#dates.format(user.dob,'dd-MM-yyyy')}"/>
-                        </div>
-                        <div>
-                            <p>Phone : </p>
-                            <p th:text="${user.phone}"/>
-                        </div>
-                        <div>
-                            <p>Address : </p>
-                            <p th:text="${user.address}"/>
-                        </div>
-                        <div>
-                            <p>Faculty : </p>
-                            <p th:text="${user.faculty.name}"/>
-                        </div>
-                    </div>
-                    <div class="rp-button">
-                        <div class="button special">
-                            <a href="">Edit Profile</a>
-                        </div>
-                    </div>
-                    <form th:action="@{/user/update}" th:method="POST" th:object="${user}">
-                        <div class="discrible form-edit">
-                            <div>
-                                <p>ID : </p>
-                                <div class="form-group">
-                                    <th:block th:if="${user.id != null}">
-                                        <input type="text" class="form-control" th:field="*{id}" disabled>
-                                        <input type="hidden" th:field="*{id}">
-                                    </th:block>
-                                    <th:block th:if="${user.id == null}">
-                                        <input type="text" class="form-control" th:field="*{id}">
-                                    </th:block>
-                                </div>
-                            </div>
-                            <div>
-                                <p>Email : </p>
-                                <div class="form-group">
-                                    <th:block th:if="${user.email != null}">
-                                        <input type="text" class="form-control" th:field="*{email}" disabled>
-                                        <input type="hidden" th:field="*{email}">
-                                    </th:block>
-                                    <th:block th:if="${user.email == null}">
-                                        <input type="text" class="form-control" th:field="*{email}">
-                                    </th:block>
-                                </div>
-                            </div>
-                            <div>
-                                <p>Date of Birth : </p>
-                                <div class="form-group">
-                                    <input type="date" class="form-control" th:field="*{dob}">
-                                    <p class="error" th:if="${#fields.hasErrors('dob')}" th:errors="*{user.dob}"></p>
-                                </div>
-                            </div>
-                            <div>
-                                <p>Phone : </p>
-                                <div class="form-group">
-                                    <input type="number" class="form-control" th:field="*{phone}">
-                                    <p class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
-                                </div>
-                            </div>
-                            <div>
-                                <p>Address : </p>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" th:field="*{address}">
-                                    <p class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
-                                </div>
-                            </div>
-                            <div>
-                                <p>Faculty : </p>
-                                <div class="form-group">
-                                    <th:block th:if="${user.faculty.name != null}">
-                                        <input type="text" class="form-control" th:field="*{faculty.name}" disabled>
-                                        <input type="hidden" th:field="*{faculty.name}">
-                                    </th:block>
-                                    <th:block th:if="${user.faculty.name == null}">
-                                        <input type="text" class="form-control" th:field="*{faculty.name}">
-                                    </th:block>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="rp-button form-edit">
-                            <div class="button">
-                                <button type="submit"><a>Save Profile</a></button>
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
+            <th:block sec:authorize="hasAuthority('STUDENT')">
+                <th:block th:include="user/user-student"></th:block>
+            </th:block>
+            <th:block sec:authorize="hasAuthority('MANAGER')">
+                <th:block th:include="user/user-manager"></th:block>
+            </th:block>
+            <th:block sec:authorize="hasAuthority('COORDINATOR')">
+                <th:block th:include="user/user-coordinator"></th:block>
+            </th:block>
+            <th:block sec:authorize="hasAuthority('GUEST')">
+                <th:block th:include="user/user-guest"></th:block>
+            </th:block>
         </div>
     </div>
 </div>
 <div th:replace="common/footer :: footer"/>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
 <script>
     $('.button.special a').click(function (e) {
         e.preventDefault();

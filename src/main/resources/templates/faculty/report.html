@@ -10,29 +10,136 @@
 <div th:replace="common/header :: header"/>
 <div class="container-area">
     <div th:replace="common/side-bar :: side-bar"></div>
-    <div class="container">
-        <table class="table text-center bg-light">
-            <tr class="thead-dark">
-                <th>Faculty</th>
-                <th>Coordinator</th>
-                <th>Total Article</th>
-                <th>%/total article</th>
-                <th>Rejected article</th>
-                <th>Accepted article</th>
-            </tr>
-            <tr th:each="item:${faculties}">
-                <td><a style="color: blue" th:href="@{'/article/statistics-report/'+${item.id}}">[[${item.name}]]</a></td>
-                <td>
-                    <th:block th:each="coordinator:${item.coordinatorEntity}" th:text="${coordinator.email}"></th:block>
-                </td>
-                <td th:text="${item.totalArticle}"/>
-                <td th:text="${item.percent} +'%'"/>
-                <td th:text="${item.rejectedArticle}"/>
-                <td th:text="${item.acceptedArticle}"/>
-            </tr>
-        </table>
+    <div class="container-page">
+        <div class="container-table">
+            <h1>STATISTICS REPORT</h1>
+            <table class="table text-center bg-light" style="margin-top: 30px">
+                <tr class="thead-dark">
+                    <th>Faculty</th>
+                    <th>Coordinator</th>
+                    <th>Total Article</th>
+                    <th>%/total article</th>
+                    <th>Rejected article</th>
+                    <th>Accepted article</th>
+                </tr>
+                <tr class="row-fal" th:each="item:${faculties}">
+                    <td><a style="color: blue" class="name-fal" th:href="@{'/article/statistics-report/'+${item.id}}">[[${item.name}]]</a>
+                    </td>
+                    <td>
+                        <th:block th:each="coordinator:${item.coordinatorEntity}"
+                                  th:text="${coordinator.email}"></th:block>
+                    </td>
+                    <td class="value-total" th:text="${item.totalArticle}"/>
+                    <td class="value-fal" th:text="${item.percent} +'%'"/>
+                    <td class="value-rej" th:text="${item.rejectedArticle}"/>
+                    <td class="value-sel" th:text="${item.acceptedArticle}"/>
+                </tr>
+            </table>
+        </div>
+
+        <div class="row" style="margin-top: 40px; margin-bottom: 80px">
+            <div class="col-md-4">
+                <div class="container-table">
+                    <div style="text-align: center">
+                        Total Articles
+                    </div>
+                    <div>
+                        <div id="donut-example-1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="container-table">
+                    <div style="text-align: center">
+                        Selected Articles
+                    </div>
+                    <div>
+                        <div id="donut-example-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="container-table">
+                    <div style="text-align: center">
+                        Rejected Articles
+                    </div>
+                    <div>
+                        <div id="donut-example-2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div th:replace="common/footer :: footer"/>
+<script th:src="@{/js/raphael.min.js}"></script>
+<script th:src="@{/js/morris.js}"></script>
+
+<script>
+    function dataset(nameField) {
+        let result = []
+        let ele = $(nameField);
+        for (i = 0; i < ele.length; i++) {
+            result.push({
+                label: $(ele[i]).closest('.row-fal').find('.name-fal').text(),
+                value: $(ele[i]).text().split('%')[0]
+            })
+        }
+        return result;
+    }
+
+    function random_color() {
+        const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+        return result = '#' + randomColor;
+    }
+
+    function colorset() {
+        let result = [];
+        let ele = $('.value-fal');
+        let color = '';
+        for (i = 0; i < ele.length; i++) {
+            do {
+                color = random_color();
+            } while (result.includes(color) || color == '#fffffff')
+            result.push(color);
+        }
+        return result;
+    }
+
+    let color = ['violet', 'indigo', 'blue', 'green', 'yellow', 'orange', 'red'];
+
+    function donutChart() {
+        window.areaChart = Morris.Donut({
+            element: 'donut-example-1',
+            redraw: true,
+            data: dataset('.value-total'),
+            colors: color
+        });
+        window.areaChart = Morris.Donut({
+            element: 'donut-example-2',
+            redraw: true,
+            data: dataset('.value-rej'),
+            colors: color
+        });
+        window.areaChart = Morris.Donut({
+            element: 'donut-example-3',
+            redraw: true,
+            data: dataset('.value-sel'),
+            colors: color
+        });
+    }
+
+    donutChart();
+
+    $(window).resize(function () {
+        $('#donut-example-1').html('')
+        $('#donut-example-2').html('')
+        $('#donut-example-3').html('')
+        donutChart();
+    })
+</script>
 </body>
 </html>

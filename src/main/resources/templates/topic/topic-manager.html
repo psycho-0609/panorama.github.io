@@ -6,52 +6,45 @@
     <title>Title</title>
     <div th:replace="common/link :: header-css"/>
     <link rel="stylesheet" th:href="@{'/css/topic-list.css'}">
+<!--    <link rel="stylesheet" th:href="@{'/css/topic-class.css'}">-->
+    <link rel="stylesheet" th:href="@{'/css/list-table.css'}">
 </head>
 <body>
 
-    <div th:replace="common/header :: header"/>
-    <div class="container-area">
-        <div th:replace="common/side-bar :: side-bar"></div>
-    <div class="container">
-        <th:block sec:authorize="hasAuthority('ADMIN')">
-            <a th:href="@{/topic/edit}" class="btn btn-primary">Add topic</a>
-        </th:block>
-
-
-        <div class="rp-show-wrapper" th:each="item:${topics}">
-            <div class="rp-discrible-wrapper">
-                <div class="title">
-                    <th:block sec:authorize="hasAuthority('COORDINATOR')">
-                        <h3><a th:href="@{'/article/manager/'+${item.code}}">[[${item.name}]] - [[${item.code}]]</a></h3>
-                    </th:block>
-                    <th:block sec:authorize="hasAuthority('STUDENT')">
-                        <h3><a th:href="@{'/article/post/'+${item.code}}">[[${item.name}]] - [[${item.code}]]</a></h3>
-                    </th:block>
-                    <th:block sec:authorize="hasAuthority('ADMIN')">
-                        <h3>[[${item.name}]] - [[${item.code}]]</h3>
-                        <a th:href="@{'/topic/edit?id='+${item.id}}">Edit</a>
-                        <a th:href="@{'/topic/delete/'+${item.id}}" onclick="if(!confirm('Are you sure to delete this topic. It will delete all article of this topic'))return false">Delete</a>
-                    </th:block>
-                </div>
-                <hr>
-                <div class="discrible">
-                    <h5>Description: </h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-                </div>
-                <hr>
-                <h6><b>Deadline: [[${#dates.format(item.deadline, 'dd-MM-yyyy')}]]</b></h6>
-                <h6><b>Closure Date: [[${#dates.format(item.closeDate, 'dd-MM-yyyy')}]]</b></h6>
-
-
+<div th:replace="common/header :: header"/>
+<div class="container-area">
+    <div th:replace="common/side-bar :: side-bar"></div>
+    <div class="container-page">
+        <div class="container-table">
+            <h1>TOPIC</h1>
+            <div class="alert alert-success" th:if="${message != null}">[[${message}]]</div>
+            <a class="btn btn-primary" th:href="@{/topic/edit}">New Topic</a>
+            <div class="table-area">
+                <table class="table table-striped table-hover">
+                    <tr class="thead-dark">
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Sub Name</th>
+                        <th>Closure Date</th>
+                        <th>Final Date</th>
+                        <th></th>
+                    </tr>
+                    <tr th:each="item:${topics}">
+                        <td th:text="${item.id}"/>
+                        <td th:text="${item.name}"/>
+                        <td th:text="${item.code}"/>
+                        <td th:text="${#dates.format(item.deadline, 'dd-MM-yyyy')}"/>
+                        <td th:text="${#dates.format(item.closeDate, 'dd-MM-yyyy')}"/>
+                        <td>
+                            <a class="btn btn-secondary" th:href="@{'/topic/edit?id='+${item.id}}">Edit</a>
+                            <a class="btn btn-danger" th:href="@{'/topic/delete/'+${item.id}}" onclick="if (!confirm('Are you sure to delete this Faculty')) return false">Delete</a>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
-    </div>
-    <div th:replace="common/footer :: footer"/>
+</div>
+<div th:replace="common/footer :: footer"/>
 </body>
 </html>

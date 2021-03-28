@@ -4,29 +4,34 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <div th:replace="common/link :: header-css"/>
+    <link rel="stylesheet" th:href="@{/css/list-table.css}">
 </head>
 <body>
     <div th:replace="common/header :: header"/>
     <div class="container-area">
         <div th:replace="common/side-bar :: side-bar"></div>
-    <table class="table mt-5 text-center">
-        <tr class="thead-dark">
-            <th>Topic</th>
-            <th>Close Date</th>
-            <th>Final Close Date</th>
-            <th>Total Article</th>
-            <th>Accepted Article</th>
-            <th>Reject Article</th>
-        </tr>
-        <tr th:each="item:${topics}">
-            <td><a th:href="@{'/faculty/report/'+${item.id}}">[[${item.name}]]</a></td>
-            <td th:text="${#dates.format(item.deadline,'dd-MM-yyyy')}">
-            <td th:text="${#dates.format(item.finalCloseDate,'dd-MM-yyyy')}">
-            <td th:text="${item.totalArticle}">
-            <td th:text="${item.acceptedArticle}">
-            <td th:text="${item.rejectedArticle}">
-        </tr>
-    </table>
+        <div class="container">
+            <div class="container-table">
+                <table class="table mt-5 text-center">
+                    <tr class="thead-dark">
+                        <th>Topic</th>
+                        <th>Close Date</th>
+                        <th>Final Close Date</th>
+                        <th>Total Article</th>
+                        <th>Accepted Article</th>
+                        <th>Reject Article</th>
+                    </tr>
+                    <tr th:each="item:${topics}">
+                        <td><a th:href="@{'/faculty/report/'+${item.id}}">[[${item.name}]]</a></td>
+                        <td th:text="${#dates.format(item.deadline,'dd-MM-yyyy')}">
+                        <td th:text="${#dates.format(item.finalCloseDate,'dd-MM-yyyy')}">
+                        <td th:text="${item.totalArticle}">
+                        <td th:text="${item.acceptedArticle}">
+                        <td th:text="${item.rejectedArticle}">
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
     <div th:replace="common/footer :: footer"/>
 </body>

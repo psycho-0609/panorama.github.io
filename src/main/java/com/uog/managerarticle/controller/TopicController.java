@@ -35,11 +35,18 @@ public class TopicController {
         model.addAttribute("topics",topicService.findAll());
         return "topic/list";
     }
-    @RequestMapping({"/manager","/post"})
-    public String managerArticle(Model model){
+    @RequestMapping("/manager")
+    public String managerArticle_1(Model model){
         List<TopicEntity> topicEntities = topicService.findAll();
         model.addAttribute("topics",topicEntities);
         return "topic/topic-manager";
+    }
+
+    @RequestMapping("/post")
+    public String managerArticle_2(Model model){
+        List<TopicEntity> topicEntities = topicService.findAll();
+        model.addAttribute("topics",topicEntities);
+        return "topic/topic-class";
     }
 
     @GetMapping("/edit")
@@ -48,7 +55,7 @@ public class TopicController {
         if(id == null){
             topicEntity = new TopicEntity();
             model.addAttribute("topic", topicEntity);
-            return "topic/add";
+            return "/topic/add";
         } else {
             topicEntity = topicService.findById(id);
             model.addAttribute("topic", topicEntity);
