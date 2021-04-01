@@ -112,7 +112,7 @@ public class FacultyServiceImp implements IFacultyService {
             calendar.setTime(entity.getCreatedDate());
             calendar.add(GregorianCalendar.DATE,14);
             Date date = df.parse(df.format(calendar.getTime()));
-            if(!date.before(now)){
+            if(date.before(now)){
                 entities.add(entity);
             }
         }

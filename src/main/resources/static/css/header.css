@@ -3,7 +3,7 @@
     padding: 0px;
     font-family: Helvetica, Arial, sans-serif;
     font-style: normal;
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 h3, h4, h5, p {
@@ -84,7 +84,7 @@ a:hover {
     position: sticky;
     top: 0;
     /* background-color: #343a40; */
-    background-color: #3f4d67;
+    background-color: #343a40;
     display: flex;
     height: 80px;
     box-shadow: 1px 0 20px 0 #3f4d67;
@@ -178,7 +178,7 @@ a:hover {
 }
 
 .side-bar a {
-    font-size: 18px;
+    font-size: 16px;
     color: rgba(255, 255, 255, 0.5);
 }
 
@@ -194,10 +194,14 @@ a:hover {
     padding-left: 3rem;
     position: relative;
     text-align: left;
+    font-weight: 0 !important;
 }
 
 .side-bar .link-header button {
     padding: 0px;
+    background: none;
+    outline: none;
+    border: none;
 }
 
 .title-bar {

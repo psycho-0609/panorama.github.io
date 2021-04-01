@@ -86,7 +86,7 @@ public class ArticleServiceImp implements IArticleService {
             entity.setContent(fileUpload.getBytes());
             entity.setSize(fileUpload.getSize());
             FileUtils.saveFileUploaded(oldArticle.getId(), fileUpload);
-            FileUtils.deleteFile(dir +"/"+oldArticle.getThumbnail());
+            FileUtils.deleteFile(dir +"/"+oldArticle.getName());
         }
         if (imageUpload.getOriginalFilename().equals("")){
             entity.setThumbnail(oldArticle.getThumbnail());
@@ -94,7 +94,7 @@ public class ArticleServiceImp implements IArticleService {
             String thumbnail = StringUtils.cleanPath(imageUpload.getOriginalFilename());
             entity.setThumbnail(thumbnail);
             FileUtils.saveFileUploaded(oldArticle.getId(), imageUpload);
-            FileUtils.deleteFile(dir +"/"+oldArticle.getName());
+            FileUtils.deleteFile(dir +"/"+oldArticle.getThumbnail());
         }
         ArticleEntity articleSaved = articleRepository.save(entity);
 
@@ -117,7 +117,7 @@ public class ArticleServiceImp implements IArticleService {
             calendar.setTime(entity.getCreatedDate());
             calendar.add(GregorianCalendar.DATE,14);
             Date date = df.parse(df.format(calendar.getTime()));
-            if(!date.before(now)){
+            if(date.before(now)){
                 entities.add(entity);
             }
         }
