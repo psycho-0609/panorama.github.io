@@ -1,6 +1,5 @@
 package com.uog.managerarticle.dto;
 
-import com.uog.managerarticle.validate.FieldMatch;
 
 import javax.validation.constraints.NotNull;
 
