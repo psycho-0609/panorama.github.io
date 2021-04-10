@@ -31,6 +31,7 @@ public class TopicServiceImp implements ITopicService {
     public TopicEntity findByCode(String code) throws Exception {
         Optional<TopicEntity> entity = topicRepository.findByCode(code);
         if (!entity.isPresent()){
+
             throw new Exception("Not Found Article");
         }
         return entity.get();
@@ -86,5 +87,14 @@ public class TopicServiceImp implements ITopicService {
             throw new Exception("Not Found");
         }
         topicRepository.save(topic);
+    }
+
+    @Override
+    public TopicEntity findByName(String name) {
+        Optional<TopicEntity> entity = topicRepository.findByName(name);
+        if (entity.isPresent()){
+            return entity.get();
+        }
+        return null;
     }
 }

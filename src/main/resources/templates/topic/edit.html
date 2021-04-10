@@ -12,7 +12,7 @@
     <div th:replace="common/side-bar :: side-bar"></div>
     <div class="container">
         <div class="content-submit col-10">
-            <h1>Add a new Topic</h1>
+            <h1>Update</h1>
             <div class="alert alert-warning" th:if="${message != null}">[[${message}]]</div>
             <form class="row" th:object="${topic}" th:action="@{/topic/update}" method="post">
                 <div class="col-6">

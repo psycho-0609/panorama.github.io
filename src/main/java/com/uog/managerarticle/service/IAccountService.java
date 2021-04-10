@@ -4,4 +4,5 @@ import com.uog.managerarticle.entity.AccountEntity;
 
 public interface IAccountService {
    AccountEntity findAccountByUserName(String userName);
+   void changePass(String newPass) throws Exception;
 }

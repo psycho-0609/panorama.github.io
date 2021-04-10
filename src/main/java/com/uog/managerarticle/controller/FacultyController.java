@@ -71,6 +71,14 @@ public class FacultyController {
             return "faculty/add";
 
         }catch (Exception e){
+            if(facultyService.findByName(facultyEntity.getName()) != null){
+                model.addAttribute("message", "Faculty existed");
+                return "faculty/add";
+            }
+            if(facultyService.findByCode(facultyEntity.getCode()) != null){
+                model.addAttribute("message", "Faculty code existed");
+                return "faculty/add";
+            }
             FacultyEntity facultySaved = facultyService.save(facultyEntity);
             ra.addFlashAttribute("message","Add faculty successfully");
         }

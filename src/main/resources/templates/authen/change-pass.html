@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/changePass}" method="post" th:object="${newPass}">
+    <input type="text" th:field="*{newPass}">
+    <input type="text" th:field="*{confirmPass}">
+    <button type="submit">Change Pass</button>
+</form>
+</body>
+</html>

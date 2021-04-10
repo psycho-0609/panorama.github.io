@@ -16,4 +16,6 @@ public interface IFacultyService {
     FacultyEntity save(FacultyEntity entity);
     void update(FacultyEntity entity) throws Exception;
     void delete(String id) throws Exception;
+    FacultyEntity findByName(String name);
+    FacultyEntity findByCode(String code);
 }

@@ -103,6 +103,16 @@ public class FacultyServiceImp implements IFacultyService {
         facultyRepository.delete(entity.get());
     }
 
+    @Override
+    public FacultyEntity findByName(String name) {
+        return facultyRepository.findAllByName(name);
+    }
+
+    @Override
+    public FacultyEntity findByCode(String code) {
+        return facultyRepository.findAllByCode(code);
+    }
+
     private int getArticleWithoutCommentAfter14DayByFaculty(String id) throws ParseException {
         List<ArticleEntity> entities = new ArrayList<>();
         final SimpleDateFormat df = new SimpleDateFormat( "dd-MM-yyyy" );

@@ -78,6 +78,10 @@ public class TopicController {
                 model.addAttribute("message", "Closure Date must happen before Final Closure Date.");
                 return "topic/add";
             }
+            if (topicService.findByName(topic.getName()) != null){
+                model.addAttribute("message", "Topic existed");
+                return "topic/add";
+            }
             try {
                 topicService.findByCode(topic.getCode());
                 model.addAttribute("message", "Topic Sub-name existed.");
@@ -93,13 +97,27 @@ public class TopicController {
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute("topic") TopicEntity topic, BindingResult bindingResult, RedirectAttributes ra, Model model) throws Exception {
         if(bindingResult.hasErrors()){
+            model.addAttribute("topic",topic);
             return "topic/edit";
         }
-        if(topic.getDeadline().after(topic.getCloseDate())) {
-            model.addAttribute("message", "Closure Date must happen before Final Closure Date.");
-            return "topic/add";
+        try {
+            TopicEntity entity = topicService.findByCode(topic.getCode());
+            if(entity.getId() == topic.getId()){
+                topicService.update(topic);
+                return "redirect:/topic/manager";
+            }
+            model.addAttribute("topic",topicService.findById(topic.getId()));
+            model.addAttribute("message", "Topic is existed");
+            return "topic/edit";
+        }catch (Exception e){
+            if(topic.getDeadline().after(topic.getCloseDate())) {
+                model.addAttribute("topic",topicService.findById(topic.getId()));
+                model.addAttribute("message", "Closure Date must happen before Final Closure Date.");
+                return "topic/edit";
+            }
+            topicService.update(topic);
         }
-        topicService.update(topic);
+
         ra.addFlashAttribute("message", "Update Topic successfully.");
         return "redirect:/topic/manager";
     }

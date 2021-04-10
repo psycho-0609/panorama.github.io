@@ -18,4 +18,5 @@ public interface ITopicService {
     void delete(Long id) throws Exception;
 
     void update(TopicEntity topic) throws Exception;
+    TopicEntity findByName(String name);
 }
